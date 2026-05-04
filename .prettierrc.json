@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json.schemastore.org/prettierrc",
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100,
+    "tabWidth": 4,
+    "importOrder": [
+        "^@/core/(.*)$",
+        "^@/pages/(.*)$",
+        "^@/common/(.*)$",
+        "^@/modules/.*/components/(.*)$",
+        "^@/modules/.*/composables/(.*)$",
+        "^@/modules/.*/modals/(.*)$",
+        "^@/modules/.*/models/(.*)$",
+        "^@/modules/.*/consts/(.*)$",
+        "^@/modules/.*/helpers/(.*)$",
+        "^@/modules/.*/services/(.*)$",
+        "^../(.*)$",
+        "^./(.*)$",
+        "<THIRD_PARTY_MODULES>"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true,
+    "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"]
+}

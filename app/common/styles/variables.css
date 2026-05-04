@@ -1,0 +1,28 @@
+:root {
+    /* Networks */
+    --color-ton: #00e5ff;
+    --color-eth: #e84bff;
+    --color-purple: #b74bff;
+
+    /* Semantic */
+    --color-gain: #00ff88;
+    --color-loss: #ff4466;
+    --color-accent: #00e5ff;
+
+    /* Neutral */
+    --color-mute: #8888aa;
+    --color-dim: #4a4a66;
+    --color-border: rgba(136, 136, 170, 0.18);
+
+    /* Surfaces */
+    --color-bg: #0a0a0f;
+    --color-surf: #0f0f18;
+    --color-surf2: #13131f;
+
+    /* Typography */
+    --font-ui: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Grid */
+    --grid-size: 30px;
+}
