@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 // import '@/common/styles/global.css'
+// import WalletDashboard from "~/modules/wallet-dashboard/components/wallet-dashboard.vue" // не работает правило из imports.ts
 
 useHead({
     titleTemplate: (title) =>
@@ -24,6 +25,7 @@ useHead({
 <template>
     <NuxtLayout>
         <NuxtPage />
+        <wallet-dashboard />
     </NuxtLayout>
 </template>
 

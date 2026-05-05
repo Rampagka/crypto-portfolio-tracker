@@ -1,4 +1,4 @@
-import { Linter } from 'eslint'
+import type { Linter } from 'eslint'
 import importPlugin from 'eslint-plugin-import-x'
 import fs from 'fs'
 
