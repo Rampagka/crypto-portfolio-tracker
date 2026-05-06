@@ -24,7 +24,7 @@ defineEmits<{
                 v-bind="$attrs"
                 @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
             />
-            <slot name="append" />
+            <slot name="append" class="append" />
         </div>
         <p v-if="error" class="input-error">! {{ error }}</p>
     </div>
@@ -45,9 +45,10 @@ defineEmits<{
     border-radius: 6px;
     overflow: hidden;
     transition: all 0.18s ease;
+    padding: 1px;
 }
 
-.input-box:focus-within {
+.input-box:has(:focus:not(button)) {
     border-color: var(--color-accent);
     box-shadow:
         0 0 0 3px color-mix(in srgb, var(--color-accent) 15%, transparent),
@@ -75,7 +76,7 @@ defineEmits<{
     transition: color 0.18s ease;
 }
 
-.input-box:focus-within .input-prefix {
+.input-box:has(:focus:not(button)) .input-prefix {
     color: var(--color-accent);
 }
 
@@ -88,7 +89,7 @@ defineEmits<{
     outline: none;
     color: #fff;
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 0.2px;
 }
 

@@ -25,7 +25,6 @@ useHead({
 <template>
     <NuxtLayout>
         <NuxtPage />
-        <wallet-dashboard />
     </NuxtLayout>
 </template>
 

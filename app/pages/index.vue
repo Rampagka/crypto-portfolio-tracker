@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Tab } from '~/common/models/interfaces/tab.interface'
-import { WalletDashboard } from '@/modules/wallet-dashboard'
+import { WalletDashboard } from '~/modules/wallet-dashboard'
+import { WalletList } from '~/modules/wallet-list'
 
 const tabList: Tab[] = [
     {
@@ -24,6 +25,9 @@ const selectTab = (value: string) => {
     <main class="flex flex-col gap-5">
         <app-tabs :tabs="tabList" :current="currentTab" @select-tab="selectTab" />
         <wallet-dashboard />
+        <address-input />
+        <wallet-list />
+        <sync-status />
     </main>
 </template>
 
