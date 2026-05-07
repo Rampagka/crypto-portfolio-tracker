@@ -24,10 +24,13 @@
     "@nuxt/image": "^2.0.0",
     "@pinia/nuxt": "^0.11.3",
     "@tailwindcss/vite": "^4.2.4",
+    "@ton/core": "^0.63.1",
     "lint-staged": "^16.4.0",
     "nuxt": "^4.4.4",
     "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
     "tailwindcss": "^4.2.4",
+    "viem": "^2.48.8",
     "vue": "^3.5.33",
     "vue-router": "^5.0.6"
   },

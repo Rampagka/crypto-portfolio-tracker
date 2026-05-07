@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import CardWrapper from '~/common/wrappers/card-wrapper.vue'
-import type { Wallet } from '~/modules/wallet-list/models/interfaces/wallet.interface'
+import type { PortfolioData } from '@/modules/portfolio'
+import { getFormattedAmount } from '~/common/utils/format-amounts'
+import { truncWalletAddress } from '~/common/utils/trunc-wallet-address'
 
 defineProps<{
-    item: Wallet
+    item: PortfolioData
 }>()
 </script>
 
@@ -13,7 +15,9 @@ defineProps<{
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="font-ui mb-1 text-sm">{{ item.name }}</h3>
-                    <p class="text-mute text-[11px]">{{ item.address }}</p>
+                    <p class="text-mute text-[11px]">
+                        {{ truncWalletAddress('ton', item.address.friendly) }}
+                    </p>
                 </div>
                 <div class="flex items-center gap-2">
                     <!--                    <button>?</button>-->
@@ -26,25 +30,36 @@ defineProps<{
             </div>
             <div class="flex items-end justify-between">
                 <div>
-                    <h2 class="mb-0.5 text-[20px]">${{ item.total }}</h2>
-                    <p class="text-mute text-[12px]">{{ item.toncoinCount }} TON</p>
+                    <h2 class="mb-0.5 text-[20px]">
+                        {{ getFormattedAmount(item.totalBalanceUsd, 'USD') }}
+                    </h2>
+                    <p class="text-mute text-[12px]">
+                        {{
+                            getFormattedAmount(item?.nativeToken?.amount, 'TON') +
+                            ` | ${getFormattedAmount(item?.nativeToken?.priceUsd * item?.nativeToken?.amount, 'USD')}`
+                        }}
+                    </p>
                 </div>
                 <div>Chart</div>
             </div>
-            <div class="divide h-[1px] w-full"></div>
+            <div class="divide h-[1px] w-full" />
             <div class="flex flex-col gap-2">
-                <h4 class="text-mute text-[12px] uppercase">Top tokens</h4>
+                <h4 class="text-mute text-[10px] uppercase">Top tokens</h4>
                 <ul class="flex w-full flex-col gap-1">
                     <li
                         v-for="token in item.topTokens"
-                        :key="token.id"
+                        :key="`${token.name}_${token.symbol}`"
                         class="flex items-center justify-between text-[12px]"
                     >
                         <p class="flex items-center gap-2">
-                            <span class="bg-accent block h-1 w-1 shrink-0 rounded-full"></span>
-                            {{ token.name }}
+                            <span class="bg-accent block h-1 w-1 shrink-0 rounded-full" />
+                            {{ token.symbol }}
                         </p>
-                        <p class="text-mute">{{ token.total }}</p>
+                        <p class="text-mute">
+                            <span>{{ getFormattedAmount(token.amount) }}</span>
+                            |
+                            <span>{{ getFormattedAmount(token.totalUsd, 'USD') }}</span>
+                        </p>
                     </li>
                 </ul>
             </div>

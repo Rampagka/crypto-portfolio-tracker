@@ -1,5 +1,28 @@
 <script setup lang="ts">
 import CardWrapper from '~/common/wrappers/card-wrapper.vue'
+import { getFormattedAmount } from '~/common/utils/format-amounts'
+
+const store = usePortfolioStore()
+
+const wallets = computed(() =>
+    store.currentChain === 'ton' ? store.getTonWallets : store.getEthWallets,
+)
+
+const totalBalanceUsd = computed(() =>
+    wallets.value.reduce((acc, cur) => acc + cur.totalBalanceUsd, 0),
+)
+
+const totalUsd = computed(() => getFormattedAmount(totalBalanceUsd.value, 'USD'))
+
+const diff24hUsd = computed(() =>
+    wallets.value.reduce((acc, cur) => acc + (cur.totalBalanceUsd * cur.totalDiff24h) / 100, 0),
+)
+
+const diff24hPercent = computed(() =>
+    totalBalanceUsd.value > 0 ? (diff24hUsd.value / totalBalanceUsd.value) * 100 : 0,
+)
+
+const isPositive = computed(() => diff24hUsd.value >= 0)
 </script>
 
 <template>
@@ -12,9 +35,15 @@ import CardWrapper from '~/common/wrappers/card-wrapper.vue'
             </p>
             <div class="flex items-end justify-between">
                 <div class="flex flex-col gap-1.5">
-                    <h2 class="text-[32px] leading-10 font-bold tracking-tighter">$6,300.84</h2>
+                    <h2 class="text-[32px] leading-10 font-bold tracking-tighter">
+                        {{ totalUsd }}
+                    </h2>
                     <p class="flex items-center gap-2 text-sm">
-                        <span class="text-gain">▲ +181.85 (+2.98%)</span>
+                        <span :class="isPositive ? 'text-gain' : 'text-loss'">
+                            {{ isPositive ? '▲' : '▼' }}
+                            {{ isPositive ? '+' : '' }}{{ getFormattedAmount(diff24hUsd, 'USD') }}
+                            ({{ isPositive ? '+' : '' }}{{ getFormattedAmount(diff24hPercent, '%') }})
+                        </span>
                         <span class="text-mute">24h</span>
                     </p>
                 </div>

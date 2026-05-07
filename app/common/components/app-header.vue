@@ -5,9 +5,13 @@
         class="header bg-bg border-border fixed top-0 right-0 left-0 z-100 flex min-h-[58px] items-center justify-between border-b px-4"
     >
         <h1 class="logo text-[24px] tracking-wide">tracker</h1>
-        <button class="h-6 w-6 text-[24px]">
-            <Icon name="solar:hamburger-menu-linear" />
-        </button>
+        <!--        <button class="h-6 w-6 text-[24px]">-->
+        <!--            <Icon name="solar:hamburger-menu-linear" />-->
+        <!--        </button>-->
+        <nav class="flex items-center gap-2">
+            <NuxtLink to="/" class="text-[16px]">Portfolio</NuxtLink>
+            <NuxtLink to="/explorer/ton" class="text-[16px]"> Explorer </NuxtLink>
+        </nav>
     </header>
 </template>
 

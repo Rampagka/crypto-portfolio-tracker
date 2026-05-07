@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
 
     routeRules: {
-        '/': { prerender: true },
+        '/': { prerender: true, redirect: { to: '/portfolio/ton', statusCode: 301 } },
     },
 
     css: ['~/common/styles/global.css'],
@@ -20,15 +20,28 @@ export default defineNuxtConfig({
         { path: '~/modules/*/components', prefix: '' },
         { path: '~/common/components', prefix: '' },
     ],
-
     imports: {
         dirs: ['common/composables', 'modules/*/components', 'modules/*/store'],
     },
 
-    modules: ['@pinia/nuxt', '@nuxt/image', '@nuxt/eslint', '@nuxt/icon'],
+    modules: [
+        '@pinia/nuxt',
+        '@nuxt/image',
+        '@nuxt/eslint',
+        '@nuxt/icon',
+        'pinia-plugin-persistedstate',
+    ],
 
     image: {
         quality: 80,
         format: ['webp'],
+    },
+    runtimeConfig: {
+        baseTonapi: '',
+        apiKey: '',
+        public: {
+            appName: 'Crypto portfolio tracker',
+            siteUrl: '',
+        },
     },
 })

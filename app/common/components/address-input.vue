@@ -1,27 +1,32 @@
 <script setup lang="ts">
+defineProps<{
+    modelValue?: string
+    error?: string
+}>()
+
 const emit = defineEmits<{
+    (e: 'update:modelValue', value: string): void
     (e: 'add'): void
 }>()
 </script>
 
 <template>
-    <div>
-        <input-ui
-            placeholder="Paste TON address..."
-            class="input"
-            name="address"
-            autocomplete="none"
-        >
-            <template #append>
-                <button
-                    class="add font-ui text-mute px-3.5 text-[12px] uppercase"
-                    @click.prevent="emit('add')"
-                >
-                    + Add
-                </button>
-            </template>
-        </input-ui>
-    </div>
+    <input-ui
+        :model-value="modelValue"
+        :error="error"
+        placeholder="Paste TON address..."
+        autocomplete="none"
+        @update:model-value="emit('update:modelValue', $event)"
+    >
+        <template #append>
+            <button
+                class="add font-ui text-mute px-3.5 text-[12px] uppercase"
+                @click.prevent="emit('add')"
+            >
+                + Add
+            </button>
+        </template>
+    </input-ui>
 </template>
 
 <style scoped>

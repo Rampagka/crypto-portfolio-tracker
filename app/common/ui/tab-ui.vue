@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
     <button
-        class="flex h-10 w-full items-center justify-center gap-2 rounded-lg border text-sm tracking-widest"
+        class="flex h-10 w-full items-center justify-center gap-2 rounded-lg border text-sm tracking-widest uppercase"
         :class="isActive ? 'text-accent border-accent opacity-100' : 'border-mute text-mute'"
         :style="{
             boxShadow: isActive
