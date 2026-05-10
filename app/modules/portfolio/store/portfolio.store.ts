@@ -14,6 +14,8 @@ export const usePortfolioStore = defineStore(
 
         const portfolio = ref<UserWallets>([])
         const isSyncing = ref(false)
+        const isAdding = ref(false)
+        const lastSyncedAt = ref<Date | null>(null)
 
         const currentChain = ref<Chain>('ton')
 
@@ -21,6 +23,14 @@ export const usePortfolioStore = defineStore(
             const find = portfolio.value.find((it) => it.address.raw === value.address.raw)
             if (!find) {
                 portfolio.value.push(value)
+            }
+        }
+
+        const updateWallet = (value: PortfolioData) => {
+            const idx = portfolio.value.findIndex((it) => it.address.raw === value.address.raw)
+            if (idx >= 0) {
+                const existing = portfolio.value[idx]!
+                portfolio.value[idx] = { ...value, id: existing.id, name: existing.name }
             }
         }
 
@@ -61,9 +71,12 @@ export const usePortfolioStore = defineStore(
         return {
             portfolio,
             isSyncing,
+            isAdding,
+            lastSyncedAt,
             currentChain,
 
             addWalletToPortfolio,
+            updateWallet,
             clearPortfolio,
             removeWalletById,
             renameWallet,
@@ -73,6 +86,8 @@ export const usePortfolioStore = defineStore(
         }
     },
     {
-        persist: true,
+        persist: {
+            pick: ['portfolio'],
+        },
     },
 )

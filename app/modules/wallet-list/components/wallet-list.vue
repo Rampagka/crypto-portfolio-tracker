@@ -13,27 +13,32 @@ const count = computed(() => wallets.value.length.toString().padStart(2, '0'))
 
 <template>
     <div class="flex flex-col gap-5">
-        <Transition name="fade">
-            <div v-if="store.isSyncing" class="flex items-center gap-2 font-mono text-[10px] tracking-widest text-accent uppercase">
-                <span class="syncing-spinner" />
-                SYNCING WALLETS…
-            </div>
-        </Transition>
-
         <div class="flex items-center justify-between text-[12px]">
             <h4 class="text-mute font-mono tracking-widest uppercase">Tracked wallets</h4>
-            <p class="text-accent">[ {{ count }} ]</p>
+            <Transition name="fade" mode="out-in">
+                <p
+                    v-if="store.isSyncing || store.isAdding"
+                    key="syncing"
+                    class="text-accent flex items-center gap-1.5"
+                >
+                    <span class="syncing-spinner" />
+                    <span class="font-mono text-[10px] tracking-widest uppercase">
+                        Syncing wallets
+                    </span>
+                </p>
+                <p v-else key="count" class="text-accent">[ {{ count }} ]</p>
+            </Transition>
         </div>
 
         <wallet-item v-for="item in wallets" :key="item.address.raw" :item="item" />
-        <wallet-item-skeleton v-if="store.isSyncing" />
+        <wallet-item-skeleton v-if="store.isAdding" />
     </div>
 </template>
 
 <style scoped>
 .syncing-spinner {
-    width: 10px;
-    height: 10px;
+    width: 16px;
+    height: 16px;
     flex-shrink: 0;
     border-radius: 50%;
     border: 1.5px solid var(--color-accent);

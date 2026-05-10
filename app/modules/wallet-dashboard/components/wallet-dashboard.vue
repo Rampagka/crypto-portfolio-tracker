@@ -8,7 +8,7 @@ const wallets = computed(() =>
     store.currentChain === 'ton' ? store.getTonWallets : store.getEthWallets,
 )
 
-const showSkeleton = computed(() => store.isSyncing && wallets.value.length === 0)
+const showSkeleton = computed(() => store.isSyncing)
 
 const totalBalanceUsd = computed(() =>
     wallets.value.reduce((acc, cur) => acc + cur.totalBalanceUsd, 0),
@@ -38,9 +38,9 @@ const isPositive = computed(() => diff24hUsd.value >= 0)
 
             <template v-if="showSkeleton">
                 <div class="flex items-end justify-between">
-                    <div class="flex flex-col gap-2">
-                        <div class="sk" style="width: 160px; height: 32px" />
-                        <div class="sk" style="width: 120px; height: 14px" />
+                    <div class="flex flex-col gap-1.5">
+                        <div class="sk" style="width: 160px; height: 40px" />
+                        <div class="sk" style="width: 120px; height: 20px" />
                     </div>
                     <div class="sk rounded-[4px]" style="width: 72px; height: 48px" />
                 </div>
@@ -55,8 +55,10 @@ const isPositive = computed(() => diff24hUsd.value >= 0)
                         <p class="flex items-center gap-2 text-sm">
                             <span :class="isPositive ? 'text-gain' : 'text-loss'">
                                 {{ isPositive ? '▲' : '▼' }}
-                                {{ isPositive ? '+' : '' }}{{ getFormattedAmount(diff24hUsd, 'USD') }}
-                                ({{ isPositive ? '+' : '' }}{{ getFormattedAmount(diff24hPercent, '%') }})
+                                {{ isPositive ? '+' : ''
+                                }}{{ getFormattedAmount(diff24hUsd, 'USD') }} ({{
+                                    isPositive ? '+' : ''
+                                }}{{ getFormattedAmount(diff24hPercent, '%') }})
                             </span>
                             <span class="text-mute">24h</span>
                         </p>
@@ -83,9 +85,9 @@ const isPositive = computed(() => diff24hUsd.value >= 0)
     background: linear-gradient(
         90deg,
         transparent 0%,
-        rgba(0, 229, 255, 0) 20%,
-        rgba(0, 229, 255, 0.33) 50%,
-        rgba(0, 229, 255, 0) 80%,
+        transparent 20%,
+        color-mix(in srgb, var(--color-accent), transparent 67%) 50%,
+        transparent 80%,
         transparent 100%
     );
     animation: skel-sweep 1.6s linear infinite;

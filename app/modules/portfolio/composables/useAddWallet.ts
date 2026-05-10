@@ -7,18 +7,18 @@ export const useAddWallet = () => {
     const isError = ref<false | string>(false)
 
     const addWalletToPortfolio = async (name: string) => {
-        store.isSyncing = true
+        store.isAdding = true
         try {
             const data = await fetchPortfolio(address.value, 'ton', name)
             if (data) {
-                store.addWalletToPortfolio(data)
+                store.addWalletToPortfolio({ ...data, name })
                 address.value = ''
             }
         } catch (err) {
             console.error(err)
             isError.value = errorMap['error']
         } finally {
-            store.isSyncing = false
+            store.isAdding = false
         }
     }
 

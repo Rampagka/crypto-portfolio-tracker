@@ -18,13 +18,10 @@ import CardWrapper from '~/common/wrappers/card-wrapper.vue'
 
             <div class="flex items-end justify-between">
                 <div class="flex flex-col gap-1.5">
-                    <div class="sk" style="width: 130px; height: 20px" />
-                    <div class="sk" style="width: 80px; height: 10px" />
+                    <div class="sk" style="width: 130px; height: 30px" />
+                    <div class="sk" style="width: 80px; height: 18px" />
                 </div>
-                <div class="flex flex-col items-end gap-1.5">
-                    <div class="sk" style="width: 72px; height: 11px" />
-                    <div class="sk rounded-[4px]" style="width: 70px; height: 22px" />
-                </div>
+                <div class="sk" style="width: 56px; height: 18px" />
             </div>
 
             <div class="divide h-px w-full" />
@@ -58,15 +55,15 @@ import CardWrapper from '~/common/wrappers/card-wrapper.vue'
     background: linear-gradient(
         90deg,
         transparent 0%,
-        rgba(0, 229, 255, 0) 20%,
-        rgba(0, 229, 255, 0.33) 50%,
-        rgba(0, 229, 255, 0) 80%,
+        transparent 20%,
+        color-mix(in srgb, var(--color-accent), transparent 67%) 50%,
+        transparent 80%,
         transparent 100%
     );
     animation: skel-sweep 1.6s linear infinite;
 }
 
 .divide {
-    background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.333), transparent);
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-accent), transparent 67%), transparent);
 }
 </style>

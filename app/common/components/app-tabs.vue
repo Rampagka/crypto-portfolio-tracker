@@ -23,5 +23,3 @@ const emit = defineEmits<{
         </tab-ui>
     </div>
 </template>
-
-<style scoped></style>

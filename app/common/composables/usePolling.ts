@@ -3,7 +3,7 @@ export function usePolling(fn: () => Promise<void>, intervalMs = 30_000) {
     const isPolling = computed(() => timerId.value !== null)
 
     const start = () => {
-        fn()
+        if (timerId.value) clearInterval(timerId.value)
         timerId.value = setInterval(fn, intervalMs)
     }
 

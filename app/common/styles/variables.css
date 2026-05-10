@@ -1,4 +1,5 @@
-:root {
+:root,
+[data-theme='ton'] {
     /* Networks */
     --color-ton: #00e5ff;
     --color-eth: #e84bff;
@@ -25,4 +26,8 @@
 
     /* Grid */
     --grid-size: 25px;
+}
+
+[data-theme='eth'] {
+    --color-accent: #e84bff;
 }

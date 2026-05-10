@@ -23,6 +23,6 @@ defineProps<{
 }
 
 .animate {
-    animation: 15s linear infinite 'neon-flash';
+    animation: neon-flash 15s linear infinite;
 }
 </style>

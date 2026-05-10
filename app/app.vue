@@ -3,6 +3,10 @@
 // import WalletDashboard from "~/modules/wallet-dashboard/components/wallet-dashboard.vue" // не работает правило из imports.ts
 
 import ModalWrapper from '@/common/wrappers/modal-wrapper.vue'
+import { usePortfolioPolling } from '@/modules/portfolio'
+
+usePortfolioPolling()
+if (import.meta.client) useChainTheme()
 
 useHead({
     titleTemplate: (title) =>
