@@ -43,7 +43,7 @@ const agoLabel = computed(() => {
 
 <style scoped>
 .live-dot {
-    box-shadow: rgb(0, 255, 136) 0px 0px 6px;
+    box-shadow: var(--color-gain) 0px 0px 6px;
     animation: 1.6s ease 0s infinite normal none running pulse;
 }
 </style>

@@ -20,6 +20,7 @@ export default class TonClient {
             headers: {
                 Authorization: `Bearer ${this.apiKey}`,
             },
+            signal: AbortSignal.timeout(8_000),
         })
         if (!res.ok) {
             throw new Error(`Error: ${res.status} - ${res.statusText}`)

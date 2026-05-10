@@ -50,8 +50,8 @@ body::after {
     right: -20%;
     height: 100dvh;
     background:
-        radial-gradient(ellipse at 30% 50%, rgba(0, 229, 255, 0.06), transparent 50%),
-        radial-gradient(ellipse at 70% 50%, rgba(232, 75, 255, 0.07), transparent 50%);
+        radial-gradient(ellipse at 30% 50%, color-mix(in srgb, var(--color-ton), transparent 94%), transparent 50%),
+        radial-gradient(ellipse at 70% 50%, color-mix(in srgb, var(--color-eth), transparent 93%), transparent 50%);
     pointer-events: none;
     transform: rotateZ(10deg);
     z-index: 1;
