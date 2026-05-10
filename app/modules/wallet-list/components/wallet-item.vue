@@ -64,7 +64,7 @@ const openOptionsModal = async (wallet: Pick<PortfolioData, 'name' | 'address' |
                         <p class="text-mute text-[12px]">
                             {{
                                 getFormattedAmount(item?.nativeToken?.amount, 'TON') +
-                                ` | ${getFormattedAmount(item?.nativeToken?.priceUsd * item?.nativeToken?.amount, 'USD')}`
+                                ` | ${getFormattedAmount((item?.nativeToken?.priceUsd ?? 0) * (item?.nativeToken?.amount ?? 0), 'USD')}`
                             }}
                         </p>
                     </div>
@@ -72,7 +72,7 @@ const openOptionsModal = async (wallet: Pick<PortfolioData, 'name' | 'address' |
                 </template>
             </div>
 
-            <div class="divide h-[1px] w-full" />
+            <div class="sk-divide h-[1px] w-full" />
 
             <!-- top tokens -->
             <div class="flex flex-col gap-1">
@@ -114,32 +114,6 @@ const openOptionsModal = async (wallet: Pick<PortfolioData, 'name' | 'address' |
 </template>
 
 <style scoped>
-.sk {
-    border-radius: 3px;
-    position: relative;
-    overflow: hidden;
-    animation: skel-pulse 1.6s ease-in-out infinite;
-}
-
-.sk::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        transparent 20%,
-        color-mix(in srgb, var(--color-accent), transparent 67%) 50%,
-        transparent 80%,
-        transparent 100%
-    );
-    animation: skel-sweep 1.6s linear infinite;
-}
-
-.divide {
-    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-accent), transparent 67%), transparent);
-}
-
 .menu-btn,
 .menu-btn span {
     transition: 0.18s;

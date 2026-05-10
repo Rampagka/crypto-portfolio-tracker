@@ -60,6 +60,10 @@ export const usePortfolioStore = defineStore(
             return portfolio.value.filter((it) => it.chain === 'eth')
         })
 
+        const currentChainWallets = computed<UserWallets>(() => {
+            return currentChain.value === 'ton' ? getTonWallets.value : getEthWallets.value
+        })
+
         watchEffect(() => {
             const chain = route.params.id
 
@@ -83,6 +87,7 @@ export const usePortfolioStore = defineStore(
 
             getTonWallets,
             getEthWallets,
+            currentChainWallets,
         }
     },
     {

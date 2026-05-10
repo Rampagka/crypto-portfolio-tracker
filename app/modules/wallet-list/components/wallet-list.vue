@@ -4,9 +4,7 @@ import WalletItemSkeleton from '@/modules/wallet-list/components/wallet-item-ske
 
 const store = usePortfolioStore()
 
-const wallets = computed(() =>
-    store.currentChain === 'ton' ? store.getTonWallets : store.getEthWallets,
-)
+const wallets = computed(() => store.currentChainWallets)
 
 const count = computed(() => wallets.value.length.toString().padStart(2, '0'))
 </script>
@@ -30,8 +28,15 @@ const count = computed(() => wallets.value.length.toString().padStart(2, '0'))
             </Transition>
         </div>
 
-        <wallet-item v-for="item in wallets" :key="item.address.raw" :item="item" />
-        <wallet-item-skeleton v-if="store.isAdding" />
+        <template v-if="wallets.length || store.isAdding">
+            <wallet-item v-for="item in wallets" :key="item.address.raw" :item="item" />
+            <wallet-item-skeleton v-if="store.isAdding" />
+        </template>
+        <div v-else class="empty-state">
+            <p class="text-mute font-mono text-[11px] tracking-widest uppercase">
+                No wallets tracked yet
+            </p>
+        </div>
     </div>
 </template>
 
@@ -54,5 +59,14 @@ const count = computed(() => wallets.value.length.toString().padStart(2, '0'))
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
+}
+
+.empty-state {
+    height: 72px;
+    border: 1px dashed color-mix(in srgb, var(--color-accent), transparent 70%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>

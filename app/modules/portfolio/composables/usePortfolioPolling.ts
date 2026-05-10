@@ -5,17 +5,13 @@ const POLL_INTERVAL_MS = 45_000
 export const usePortfolioPolling = () => {
     const store = usePortfolioStore()
 
-    const currentWallets = computed(() =>
-        store.currentChain === 'ton' ? store.getTonWallets : store.getEthWallets,
-    )
-
     const refreshAllWallets = async () => {
-        const wallets = currentWallets.value
+        const wallets = store.currentChainWallets
         if (!wallets.length) return
 
         store.isSyncing = true
         try {
-            await Promise.all(
+            const results = await Promise.allSettled(
                 wallets.map(async (wallet) => {
                     const data = await fetchPortfolio(
                         wallet.address.friendly,
@@ -25,9 +21,9 @@ export const usePortfolioPolling = () => {
                     if (data) store.updateWallet(data)
                 }),
             )
+            const failed = results.filter((r) => r.status === 'rejected')
+            if (failed.length) console.error('[polling] some wallets failed to refresh:', failed)
             store.lastSyncedAt = new Date()
-        } catch (err) {
-            console.error('[polling] refresh failed', err)
         } finally {
             store.isSyncing = false
         }
@@ -35,13 +31,13 @@ export const usePortfolioPolling = () => {
 
     const { start, stop } = usePolling(refreshAllWallets, POLL_INTERVAL_MS)
 
-    watch([() => currentWallets.value.length, () => store.currentChain], ([count]) => {
+    watch([() => store.currentChainWallets.length, () => store.currentChain], ([count]) => {
         stop()
         if (count > 0) start()
     })
 
     onMounted(async () => {
-        if (currentWallets.value.length > 0) {
+        if (store.currentChainWallets.length > 0) {
             await refreshAllWallets()
             start()
         }

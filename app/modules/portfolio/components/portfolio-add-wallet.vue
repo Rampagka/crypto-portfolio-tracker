@@ -13,7 +13,7 @@ const addWallet = async () => {
         isError.value = errorMap['invalid-ton']
         return
     }
-    if (store.portfolio.find((item) => item.address.friendly === address.value)) {
+    if (store.portfolio.some((item) => item.address.friendly === address.value || item.address.raw === address.value)) {
         isError.value = errorMap['already-added']
         return
     }

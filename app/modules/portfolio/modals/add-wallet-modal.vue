@@ -6,10 +6,13 @@ const props = defineProps<{
 const emit = defineEmits<{ close: [] }>()
 const initialName = 'MyWallet'
 const walletName = ref(initialName)
+const isLoading = ref(false)
 
 const handleAdd = async () => {
-    emit('close')
+    isLoading.value = true
     await props.addWalletToPortfolio(walletName.value)
+    isLoading.value = false
+    emit('close')
 }
 
 const nameIsEmpty = computed(() => walletName.value.length === 0)
@@ -18,7 +21,9 @@ const nameIsEmpty = computed(() => walletName.value.length === 0)
 <template>
     <div class="flex flex-col gap-4">
         <wallet-name-input v-model="walletName" :default-value="initialName" />
-        <button-ui :disabled="nameIsEmpty" @click="handleAdd">Add wallet</button-ui>
+        <button-ui :disabled="nameIsEmpty || isLoading" @click="handleAdd">
+            {{ isLoading ? 'Adding...' : 'Add wallet' }}
+        </button-ui>
     </div>
 </template>
 

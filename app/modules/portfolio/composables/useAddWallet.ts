@@ -9,7 +9,7 @@ export const useAddWallet = () => {
     const addWalletToPortfolio = async (name: string) => {
         store.isAdding = true
         try {
-            const data = await fetchPortfolio(address.value, 'ton', name)
+            const data = await fetchPortfolio(address.value, store.currentChain, name)
             if (data) {
                 store.addWalletToPortfolio({ ...data, name })
                 address.value = ''
