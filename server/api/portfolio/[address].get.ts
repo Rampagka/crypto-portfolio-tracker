@@ -40,14 +40,11 @@ export default defineCachedEventHandler(
     },
 )
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
-
 async function getTonPortfolio(address: string, client: TonClient, name: string, chain: Chain) {
-    const wallet = await client.getWallet(address)
-    await delay(1050)
-    const walletInfo = await client.getWalletInfo(address)
-    await delay(1050)
-    const rates = await client.getTonRates()
-
+    const [wallet, walletInfo, rates] = await Promise.all([
+        client.getWallet(address),
+        client.getWalletInfo(address),
+        client.getTonRates(),
+    ])
     return mapPortfolio(wallet, walletInfo, rates, name, chain)
 }

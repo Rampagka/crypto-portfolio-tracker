@@ -1,31 +1,29 @@
 import type { Modal } from '~/common/models/interfaces/modal.interface'
 
-export const currentModal = ref<Modal | null>(null)
+const useModalState = () => useState<Modal | null>('current-modal', () => null)
 
 export const openModal = <T = unknown>(opts: Omit<Modal<T>, 'resolve'>): Promise<T> => {
+    const modal = useModalState()
     return new Promise<T>((resolve) => {
-        currentModal.value = {
-            ...opts,
-            resolve: resolve as (value: unknown) => void,
-        }
+        modal.value = { ...opts, resolve: resolve as (value: unknown) => void }
     })
 }
 
 export const closeModal = <T = unknown>(result?: T): void => {
-    const current = currentModal.value
-
+    const modal = useModalState()
+    const current = modal.value
     if (current?.resolve) {
         current.resolve((result ?? null) as unknown)
-        currentModal.value = null
+        modal.value = null
     }
 }
 
 export const useCurrentModal = () => {
+    const modal = useModalState()
     if (import.meta.client) {
-        watch(currentModal, (val) => {
+        watch(modal, (val) => {
             document.documentElement.style.overflow = val ? 'hidden' : 'auto'
         })
     }
-
-    return currentModal
+    return modal
 }

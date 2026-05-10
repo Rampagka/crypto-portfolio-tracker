@@ -87,7 +87,23 @@ export const usePortfolioStore = defineStore(
     },
     {
         persist: {
-            pick: ['portfolio'],
+            pick: ['portfolio', 'lastSyncedAt'],
+            serializer: {
+                serialize: (state) =>
+                    JSON.stringify({
+                        ...state,
+                        lastSyncedAt: state.lastSyncedAt
+                            ? (state.lastSyncedAt as Date).toISOString()
+                            : null,
+                    }),
+                deserialize: (str) => {
+                    const data = JSON.parse(str)
+                    return {
+                        ...data,
+                        lastSyncedAt: data.lastSyncedAt ? new Date(data.lastSyncedAt) : null,
+                    }
+                },
+            },
         },
     },
 )

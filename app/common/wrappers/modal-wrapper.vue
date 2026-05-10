@@ -11,9 +11,8 @@ const getTransitionName = (animation?: ModalAnimation) => {
 
 <template>
     <Teleport to="body">
-        <div v-if="!modal" class="none" />
         <div
-            v-else
+            v-if="modal"
             class="fixed inset-0 z-999 flex items-center justify-center bg-[rgba(0,0,0,0.4)]"
             :class="[modal && modal.modalOptions.transparent ? 'bg-transparent' : '']"
             @click.self="!modal.modalOptions.disableBackdropClose && closeModal()"
