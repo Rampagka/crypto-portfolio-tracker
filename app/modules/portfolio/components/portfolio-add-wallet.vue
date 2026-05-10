@@ -1,13 +1,38 @@
 <script setup lang="ts">
 import { useAddWallet } from '~/modules/portfolio/composables/useAddWallet'
+import { openModal } from '~/common/composables/useModal'
+import AddWalletModal from '~/modules/portfolio/modals/add-wallet-modal.vue'
+import { errorMap } from '~/modules/portfolio/helpers/inputs-error-map'
+import { isValidTonAddress } from '~/modules/portfolio/helpers/validate-address'
 
 const { isError, address, addWalletToPortfolio } = useAddWallet()
+const store = usePortfolioStore()
+
+const addWallet = async () => {
+    if (!isValidTonAddress(address.value)) {
+        isError.value = errorMap['invalid-ton']
+        return
+    }
+    if (store.portfolio.find((item) => item.address.friendly === address.value)) {
+        isError.value = errorMap['already-added']
+        return
+    }
+    await openModal({
+        component: AddWalletModal,
+        modalOptions: {
+            title: 'Add wallet name',
+        },
+        props: {
+            addWalletToPortfolio,
+        },
+    })
+}
 </script>
 
 <template>
     <address-input
         v-model="address"
-        :error="isError ? 'Invalid TON address' : undefined"
-        @add="addWalletToPortfolio"
+        :error="isError || undefined"
+        @add="addWallet"
     />
 </template>

@@ -1,6 +1,7 @@
 import type { Chain, NetworkName } from '~/common/models/types/networks.type'
 
 export interface PortfolioData {
+    id: string
     name: string
     chain: Chain
     address: { raw: string; friendly: string }

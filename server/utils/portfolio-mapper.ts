@@ -14,6 +14,7 @@ export function mapPortfolio(
     chain: Chain,
 ): PortfolioData {
     const asset: PortfolioData = {
+        id: crypto.randomUUID(),
         name,
         chain,
         address: {

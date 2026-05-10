@@ -3,10 +3,21 @@ import CardWrapper from '~/common/wrappers/card-wrapper.vue'
 import type { PortfolioData } from '@/modules/portfolio'
 import { getFormattedAmount } from '~/common/utils/format-amounts'
 import { truncWalletAddress } from '~/common/utils/trunc-wallet-address'
+import OptionsWalletModal from '~/modules/wallet-list/modals/options-wallet-modal.vue'
 
 defineProps<{
     item: PortfolioData
 }>()
+
+const openOptionsModal = async (wallet: Pick<PortfolioData, 'name' | 'address' | 'id'>) => {
+    await openModal({
+        component: OptionsWalletModal,
+        modalOptions: {},
+        props: {
+            walletShort: wallet,
+        },
+    })
+}
 </script>
 
 <template>
@@ -23,6 +34,14 @@ defineProps<{
                     <!--                    <button>?</button>-->
                     <button
                         class="menu-btn border-border flex h-7.5 w-7.5 items-center justify-center rounded-[6px] border"
+                        @click="
+                            () =>
+                                openOptionsModal({
+                                    name: item.name,
+                                    address: item.address,
+                                    id: item.id,
+                                } as Pick<PortfolioData, 'name' | 'address' | 'id'>)
+                        "
                     >
                         <Icon name="iconamoon:menu-kebab-vertical" class="text-mute" />
                     </button>

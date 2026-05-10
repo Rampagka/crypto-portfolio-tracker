@@ -12,28 +12,41 @@ export const usePortfolioStore = defineStore(
     () => {
         const route = useRoute()
 
-        const initialWalletName = 'MyWallet'
-
-        const walletName = ref(initialWalletName)
         const portfolio = ref<UserWallets>([])
+        const isSyncing = ref(false)
 
         const currentChain = ref<Chain>('ton')
 
-        const addPortfolio = (value: PortfolioData) => {
+        const addWalletToPortfolio = (value: PortfolioData) => {
             const find = portfolio.value.find((it) => it.address.raw === value.address.raw)
             if (!find) {
                 portfolio.value.push(value)
             }
         }
+
+        const removeWalletById = (id: string) => {
+            const find = portfolio.value.findIndex((it) => it.id === id)
+            if (find >= 0) {
+                portfolio.value.splice(find, 1)
+            }
+        }
+
+        const renameWallet = (id: string, name: string) => {
+            const find = portfolio.value.find((it) => it.id === id)
+            if (find) {
+                find.name = name
+            }
+        }
+
         const clearPortfolio = () => {
             portfolio.value = []
         }
 
-        const getTonWallets = computed(() => {
+        const getTonWallets = computed<UserWallets>(() => {
             return portfolio.value.filter((it) => it.chain === 'ton')
         })
 
-        const getEthWallets = computed(() => {
+        const getEthWallets = computed<UserWallets>(() => {
             return portfolio.value.filter((it) => it.chain === 'eth')
         })
 
@@ -46,18 +59,20 @@ export const usePortfolioStore = defineStore(
         })
 
         return {
-            walletName,
             portfolio,
+            isSyncing,
             currentChain,
 
-            addPortfolio,
+            addWalletToPortfolio,
             clearPortfolio,
+            removeWalletById,
+            renameWallet,
 
             getTonWallets,
             getEthWallets,
         }
     },
-    /* {
+    {
         persist: true,
-    },*/
+    },
 )

@@ -1,23 +1,24 @@
+import { errorMap } from '~/modules/portfolio/helpers/inputs-error-map'
 import { fetchPortfolio } from '~/modules/portfolio/services/portfolio.service'
 
 export const useAddWallet = () => {
     const store = usePortfolioStore()
-    const initialName = 'MyWallet'
     const address = ref<string>('')
-    const walletName = ref<string>(initialName)
-    const isError = ref(false)
+    const isError = ref<false | string>(false)
 
-    const addWalletToPortfolio = async () => {
+    const addWalletToPortfolio = async (name: string) => {
+        store.isSyncing = true
         try {
-            const data = await fetchPortfolio(address.value, 'ton', walletName.value)
+            const data = await fetchPortfolio(address.value, 'ton', name)
             if (data) {
-                store.addPortfolio(data)
+                store.addWalletToPortfolio(data)
                 address.value = ''
-                walletName.value = initialName
             }
         } catch (err) {
             console.error(err)
-            isError.value = true
+            isError.value = errorMap['error']
+        } finally {
+            store.isSyncing = false
         }
     }
 
@@ -29,7 +30,6 @@ export const useAddWallet = () => {
 
     return {
         address,
-        walletName,
         isError,
 
         addWalletToPortfolio,

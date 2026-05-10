@@ -2,6 +2,8 @@
 // import '@/common/styles/global.css'
 // import WalletDashboard from "~/modules/wallet-dashboard/components/wallet-dashboard.vue" // не работает правило из imports.ts
 
+import ModalWrapper from '@/common/wrappers/modal-wrapper.vue'
+
 useHead({
     titleTemplate: (title) =>
         title ? `${title} | Crypto Portfolio Tracker` : 'Crypto Portfolio Tracker',
@@ -26,6 +28,7 @@ useHead({
     <NuxtLayout>
         <NuxtPage />
     </NuxtLayout>
+    <modal-wrapper />
 </template>
 
 <style></style>
