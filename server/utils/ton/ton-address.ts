@@ -1,13 +1,8 @@
 import { Address } from '@ton/core'
 
-interface AddressError {
-    message: string
-}
-
 class TonAddress {
-    parseAddress(address: string): Address | AddressError {
-        if (!this.validate(address)) return new Error('Not a valid address')
-
+    parseAddress(address: string): Address {
+        this.validate(address)
         return Address.parse(address)
     }
 

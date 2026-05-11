@@ -1,9 +1,9 @@
+import type { Chain } from '@/common/models/types/networks.type'
+
 import type {
     PortfolioData,
     UserWallets,
 } from '@/modules/portfolio/models/interfaces/portfolio.interface'
-
-import type { Chain } from '~/common/models/types/networks.type'
 
 import { defineStore } from 'pinia'
 
@@ -56,17 +56,18 @@ export const usePortfolioStore = defineStore(
             return portfolio.value.filter((it) => it.chain === 'ton')
         })
 
-        const getEthWallets = computed<UserWallets>(() => {
-            return portfolio.value.filter((it) => it.chain === 'eth')
-        })
+        // const getEthWallets = computed<UserWallets>(() => {
+        //     return portfolio.value.filter((it) => it.chain === 'eth')
+        // })
 
         const currentChainWallets = computed<UserWallets>(() => {
-            return currentChain.value === 'ton' ? getTonWallets.value : getEthWallets.value
+            // return currentChain.value === 'ton' ? getTonWallets.value : getEthWallets.value
+            return getTonWallets.value
         })
 
         watchEffect(() => {
-            const chain = route.params.id
-
+            const raw = route.params.id
+            const chain = Array.isArray(raw) ? raw[0] : raw
             if (chain) {
                 currentChain.value = chain as Chain
             }
@@ -86,27 +87,20 @@ export const usePortfolioStore = defineStore(
             renameWallet,
 
             getTonWallets,
-            getEthWallets,
+            // getEthWallets,
             currentChainWallets,
         }
     },
     {
         persist: {
+            storage: piniaPluginPersistedstate.localStorage(),
             pick: ['portfolio', 'lastSyncedAt'],
             serializer: {
-                serialize: (state) =>
-                    JSON.stringify({
-                        ...state,
-                        lastSyncedAt: state.lastSyncedAt
-                            ? (state.lastSyncedAt as Date).toISOString()
-                            : null,
-                    }),
-                deserialize: (str) => {
-                    const data = JSON.parse(str)
-                    return {
-                        ...data,
-                        lastSyncedAt: data.lastSyncedAt ? new Date(data.lastSyncedAt) : null,
-                    }
+                serialize: (value) => JSON.stringify(value),
+                deserialize: (value) => {
+                    const data = JSON.parse(value)
+                    if (data.lastSyncedAt) data.lastSyncedAt = new Date(data.lastSyncedAt)
+                    return data
                 },
             },
         },

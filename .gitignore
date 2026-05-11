@@ -21,8 +21,12 @@ logs
 # Claude
 .claude
 .claude/settings.local.json
-CLAUDE.md
 nul
+
+# Markdown — ignore planning/notes, keep docs
+*.md
+!README.md
+!CLAUDE.md
 
 # Local env files
 .env

@@ -29,7 +29,7 @@ export default defineNuxtConfig({
         '@nuxt/image',
         '@nuxt/eslint',
         '@nuxt/icon',
-        'pinia-plugin-persistedstate',
+        'pinia-plugin-persistedstate/nuxt',
     ],
 
     image: {

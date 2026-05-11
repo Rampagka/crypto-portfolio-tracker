@@ -40,7 +40,7 @@ const isPositive = computed(() => diff24hUsd.value >= 0)
                         <div class="sk" style="width: 160px; height: 40px" />
                         <div class="sk" style="width: 120px; height: 20px" />
                     </div>
-                    <div class="sk rounded-[4px]" style="width: 72px; height: 48px" />
+                    <!--                    <div class="sk rounded-[4px]" style="width: 72px; height: 48px" />-->
                 </div>
             </template>
 
@@ -61,7 +61,7 @@ const isPositive = computed(() => diff24hUsd.value >= 0)
                             <span class="text-mute">24h</span>
                         </p>
                     </div>
-                    <div>CHART</div>
+                    <!--                    <div>CHART</div>-->
                 </div>
             </template>
         </div>

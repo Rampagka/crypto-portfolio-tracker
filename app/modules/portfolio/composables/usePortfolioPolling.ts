@@ -1,4 +1,4 @@
-import { fetchPortfolio } from '~/modules/portfolio/services/portfolio.service'
+import { fetchPortfolio } from '@/modules/portfolio/services/portfolio.service'
 
 const POLL_INTERVAL_MS = 45_000
 
@@ -22,7 +22,7 @@ export const usePortfolioPolling = () => {
                 }),
             )
             const failed = results.filter((r) => r.status === 'rejected')
-            if (failed.length) console.error('[polling] some wallets failed to refresh:', failed)
+            if (failed.length) console.error('[polling] some wallets failed:', failed)
             store.lastSyncedAt = new Date()
         } finally {
             store.isSyncing = false
@@ -42,6 +42,4 @@ export const usePortfolioPolling = () => {
             start()
         }
     })
-
-    onUnmounted(stop)
 }

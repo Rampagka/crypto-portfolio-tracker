@@ -23,12 +23,12 @@ const moduleOverrides: Linter.Config[] = MODULES.map((mod) => ({
                 patterns: [
                     noRelativeImports,
                     {
-                        regex: `^@/modules/${mod}(/index\\.[tj]sx?)?$`,
+                        regex: `^(@|~)/modules/${mod}(/index\\.[tj]sx?)?$`,
                         message:
                             'Внутри своего модуля используй полный путь (@/modules/.../file), а не public API.',
                     },
                     {
-                        regex: `^@/modules/(?!${mod}/)[^/]+/.+`,
+                        regex: `^(@|~)/modules/(?!${mod}/)[^/]+/.+`,
                         message:
                             'Импорт из другого модуля — только через public API (@/modules/название).',
                     },
@@ -67,7 +67,7 @@ export default [
                     patterns: [
                         noRelativeImports,
                         {
-                            regex: '^@/modules/([^/]+)/.+',
+                            regex: '^(@|~)/modules/([^/]+)/.+',
                             message:
                                 'В pages / App.vue / main.ts разрешён импорт из модулей ТОЛЬКО через public API (@/modules/название). ' +
                                 'Глубокие пути запрещены — добавь нужный экспорт в index.ts модуля.',

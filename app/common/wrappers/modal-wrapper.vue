@@ -31,7 +31,7 @@ const getTransitionName = (animation?: ModalAnimation) => {
                     ]"
                 >
                     <div class="px-4">
-                        <div class="flex items-center justify-center py-2">
+                        <div class="flex items-center justify-center pt-2 pb-4">
                             <div class="bg-mute h-1 w-16 rounded-2xl" />
                         </div>
                         <h4
@@ -44,7 +44,7 @@ const getTransitionName = (animation?: ModalAnimation) => {
 
                     <component
                         :is="modal.component"
-                        :class="modal.modalOptions.bare ? '' : 'p-4'"
+                        :class="modal.modalOptions.bare ? '' : 'px-4 pt-4 pb-8'"
                         v-bind="modal.props"
                         @close="closeModal"
                         @result="closeModal"
@@ -55,4 +55,14 @@ const getTransitionName = (animation?: ModalAnimation) => {
     </Teleport>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* slide-bottom (default) */
+.modal-slide-bottom-enter-active,
+.modal-slide-bottom-leave-active {
+    transition: transform 0.2s ease;
+}
+.modal-slide-bottom-enter-from,
+.modal-slide-bottom-leave-to {
+    transform: translateY(100%);
+}
+</style>

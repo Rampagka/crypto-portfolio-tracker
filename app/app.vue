@@ -14,6 +14,11 @@ useHead({
     meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        {
+            name: 'description',
+            content:
+                'Astra — free crypto portfolio tracker for TON and ETH. Monitor wallet balances, token holdings and 24h changes without any sign-up.',
+        },
     ],
     link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -22,9 +27,9 @@ useHead({
             rel: 'stylesheet',
             href: 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap',
         },
-        { rel: 'icon', href: '/favicon.ico' },
+        { rel: 'icon', href: '/faviconx4.ico' },
     ],
-    htmlAttrs: { lang: 'ru' },
+    htmlAttrs: { lang: 'en' },
 })
 </script>
 

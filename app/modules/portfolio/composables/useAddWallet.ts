@@ -1,5 +1,5 @@
-import { errorMap } from '~/modules/portfolio/helpers/inputs-error-map'
-import { fetchPortfolio } from '~/modules/portfolio/services/portfolio.service'
+import { errorMap } from '@/modules/portfolio/helpers/inputs-error-map'
+import { fetchPortfolio } from '@/modules/portfolio/services/portfolio.service'
 
 export const useAddWallet = () => {
     const store = usePortfolioStore()

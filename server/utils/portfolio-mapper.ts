@@ -6,6 +6,8 @@ import type { Chain } from '~/common/models/types/networks.type'
 
 import TonAddress from '#server/utils/ton/ton-address'
 
+const parsePercent = (str?: string): number => parseFloat((str ?? '0').replace('−', '-')) || 0
+
 export function mapPortfolio(
     wallet: TonAccount,
     walletInfo: TonAccountInfo,
@@ -26,16 +28,16 @@ export function mapPortfolio(
         nativeToken: {
             symbol: 'TON',
             amount: wallet.balance / 1e9,
-            priceUsd: rates.rates.TON.prices.USD,
-            change24h: parseFloat(rates.rates.TON.diff_24h.USD) || 0,
+            priceUsd: rates.rates.TON?.prices?.USD ?? 0,
+            change24h: parsePercent(rates.rates.TON?.diff_24h?.USD),
         },
         topTokens: [],
     }
 
     const weightedAssets: { valueUsd: number; change24h: number }[] = []
 
-    const tonValueUsd = (wallet.balance / 1e9) * rates.rates.TON.prices.USD
-    const tonChange24h = parseFloat(rates.rates.TON.diff_24h.USD) || 0
+    const tonValueUsd = (wallet.balance / 1e9) * (rates.rates.TON?.prices?.USD ?? 0)
+    const tonChange24h = parsePercent(rates.rates.TON?.diff_24h?.USD)
 
     asset.totalBalanceUsd += tonValueUsd
     weightedAssets.push({ valueUsd: tonValueUsd, change24h: tonChange24h })
@@ -43,8 +45,7 @@ export function mapPortfolio(
     walletInfo.balances.forEach((balance) => {
         if (balance.jetton.verification === 'whitelist') {
             const priceUsd = balance.price?.prices?.['USD'] ?? 0
-            const diff = balance.price?.diff_24h?.['USD']
-            const change24h = diff && typeof diff === 'string' ? parseFloat(diff) || 0 : 0
+            const change24h = parsePercent(balance.price?.diff_24h?.['USD'])
             const friendlyAmount = fromNano(balance.balance, balance.jetton.decimals)
             const totalUsd = friendlyAmount * priceUsd
             const { address, name, symbol, decimals, image } = balance.jetton

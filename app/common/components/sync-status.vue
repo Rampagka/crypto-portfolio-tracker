@@ -12,12 +12,21 @@ onMounted(() => {
 
 onUnmounted(() => clearInterval(timer))
 
+// const timeLabel = computed(() => {
+//     if (!store.lastSyncedAt) return null
+//     return store.lastSyncedAt.toLocaleTimeString('en-GB', {
+//         hour: '2-digit',
+//         minute: '2-digit',
+//         timeZone: 'UTC',
+//         timeZoneName: 'short',
+//     })
+// })
+
 const timeLabel = computed(() => {
     if (!store.lastSyncedAt) return null
     return store.lastSyncedAt.toLocaleTimeString('en-GB', {
         hour: '2-digit',
         minute: '2-digit',
-        timeZone: 'UTC',
         timeZoneName: 'short',
     })
 })

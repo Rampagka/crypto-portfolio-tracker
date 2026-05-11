@@ -5,7 +5,7 @@ import { getFormattedAmount } from '~/common/utils/format-amounts'
 import { truncWalletAddress } from '~/common/utils/trunc-wallet-address'
 import OptionsWalletModal from '~/modules/wallet-list/modals/options-wallet-modal.vue'
 
-defineProps<{
+const props = defineProps<{
     item: PortfolioData
 }>()
 
@@ -18,18 +18,28 @@ const openOptionsModal = async (wallet: Pick<PortfolioData, 'name' | 'address' |
         props: { walletShort: wallet },
     })
 }
+
+const copyAddress = async () => {
+    if (import.meta.client) {
+        const address = props.item.address.friendly
+        await navigator.clipboard.writeText(address)
+    }
+}
 </script>
 
 <template>
     <card-wrapper :with-neon-animation="true">
         <div class="flex min-h-[40px] flex-col gap-3 p-4 font-mono">
-            <!-- name + address + menu — всегда видны -->
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="font-ui mb-1 text-sm">{{ item.name }}</h3>
-                    <p class="text-mute text-[11px]">
+                    <button
+                        class="text-mute flex items-center gap-1 text-[11px] active:text-white"
+                        @click="copyAddress"
+                    >
                         {{ truncWalletAddress('ton', item.address.friendly) }}
-                    </p>
+                        <Icon name="iconamoon:copy" size="1.3em" />
+                    </button>
                 </div>
                 <div class="flex items-center gap-2">
                     <button
@@ -54,7 +64,7 @@ const openOptionsModal = async (wallet: Pick<PortfolioData, 'name' | 'address' |
                         <div class="sk" style="width: 130px; height: 30px" />
                         <div class="sk" style="width: 80px; height: 14px" />
                     </div>
-                    <div class="sk" style="width: 56px; height: 18px" />
+                    <!--                    <div class="sk" style="width: 56px; height: 18px" />-->
                 </template>
                 <template v-else>
                     <div>
@@ -68,7 +78,7 @@ const openOptionsModal = async (wallet: Pick<PortfolioData, 'name' | 'address' |
                             }}
                         </p>
                     </div>
-                    <div>Chart</div>
+                    <!--                    <div>Chart</div>-->
                 </template>
             </div>
 
@@ -79,7 +89,7 @@ const openOptionsModal = async (wallet: Pick<PortfolioData, 'name' | 'address' |
                 <h4 class="text-mute text-[10px] uppercase">Top tokens</h4>
                 <template v-if="store.isSyncing">
                     <div
-                        v-for="i in 3"
+                        v-for="i in item?.topTokens?.length ?? 3"
                         :key="i"
                         class="flex items-center justify-between"
                         style="height: 18px"

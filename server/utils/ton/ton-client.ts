@@ -1,5 +1,9 @@
 import type { TonAccount, TonAccountInfo, TonRates } from '~/common/models/interfaces/ton.interface'
 
+// Shared cache to avoid duplicate rates requests across concurrent wallet fetches
+let _ratesPromise: Promise<TonRates> | null = null
+let _ratesExpiresAt = 0
+
 export default class TonClient {
     private readonly baseUrl: string
     private readonly apiKey: string
@@ -40,6 +44,10 @@ export default class TonClient {
     }
 
     async getTonRates(): Promise<TonRates> {
-        return this.request<TonRates>(`/rates`, { tokens: 'ton', currencies: 'usd' })
+        const now = Date.now()
+        if (_ratesPromise && now < _ratesExpiresAt) return _ratesPromise
+        _ratesExpiresAt = now + 30_000
+        _ratesPromise = this.request<TonRates>(`/rates`, { tokens: 'ton', currencies: 'usd' })
+        return _ratesPromise
     }
 }

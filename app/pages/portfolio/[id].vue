@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PortfolioContent } from '~/modules/portfolio'
+import { PortfolioContent } from '@/modules/portfolio'
 
 const route = useRoute()
 const chain = computed(() => {
@@ -12,7 +12,10 @@ useHead({
     meta: [
         {
             name: 'description',
-            content: 'Astra tracker - free tracker in TON blockchain without authorization',
+            content: computed(
+                () =>
+                    `Track your ${chain.value} wallet balances, token holdings and 24h portfolio changes — no sign-up required. Astra is a free, open crypto portfolio tracker.`,
+            ),
         },
     ],
 })
