@@ -32,6 +32,12 @@ export default defineNuxtConfig({
         'pinia-plugin-persistedstate/nuxt',
     ],
 
+    icon: {
+        clientBundle: {
+            scan: true,
+        },
+    },
+
     image: {
         quality: 80,
         format: ['webp'],

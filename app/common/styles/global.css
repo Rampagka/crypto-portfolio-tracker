@@ -18,6 +18,10 @@
     --font-family-mono: var(--font-mono);
 }
 
+html {
+    scrollbar-gutter: stable;
+}
+
 html,
 body {
     height: 100%;

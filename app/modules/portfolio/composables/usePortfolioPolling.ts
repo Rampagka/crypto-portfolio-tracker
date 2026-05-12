@@ -1,6 +1,6 @@
 import { fetchPortfolio } from '@/modules/portfolio/services/portfolio.service'
 
-const POLL_INTERVAL_MS = 45_000
+const POLL_INTERVAL_MS = 65_000
 
 export const usePortfolioPolling = () => {
     const store = usePortfolioStore()

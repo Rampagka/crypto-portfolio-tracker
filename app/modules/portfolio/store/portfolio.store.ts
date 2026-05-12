@@ -5,6 +5,8 @@ import type {
     UserWallets,
 } from '@/modules/portfolio/models/interfaces/portfolio.interface'
 
+import { MAX_SIZE } from '~/modules/portfolio/consts/portfolio-size'
+
 import { defineStore } from 'pinia'
 
 export const usePortfolioStore = defineStore(
@@ -21,7 +23,7 @@ export const usePortfolioStore = defineStore(
 
         const addWalletToPortfolio = (value: PortfolioData) => {
             const find = portfolio.value.find((it) => it.address.raw === value.address.raw)
-            if (!find) {
+            if (!find && portfolio.value.length < MAX_SIZE) {
                 portfolio.value.push(value)
             }
         }

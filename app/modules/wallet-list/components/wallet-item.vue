@@ -9,36 +9,49 @@ const props = defineProps<{
     item: PortfolioData
 }>()
 
+const copySuccessState = ref(false)
+
 const store = usePortfolioStore()
 
 const openOptionsModal = async (wallet: Pick<PortfolioData, 'name' | 'address' | 'id'>) => {
     await openModal({
         component: OptionsWalletModal,
-        modalOptions: {},
+        modalOptions: {
+            title: 'Wallet actions',
+        },
         props: { walletShort: wallet },
     })
 }
 
 const copyAddress = async () => {
-    if (import.meta.client) {
+    if (!import.meta.client) return
+    try {
         const address = props.item.address.friendly
         await navigator.clipboard.writeText(address)
+        copySuccessState.value = true
+    } catch (err) {
+        console.error(err)
+        throw err
+    } finally {
+        setTimeout(() => (copySuccessState.value = false), 1000)
     }
 }
 </script>
 
 <template>
-    <card-wrapper :with-neon-animation="true">
-        <div class="flex min-h-[40px] flex-col gap-3 p-4 font-mono">
+    <card-wrapper :with-neon-animation="true" class="w-full">
+        <div class="flex min-h-[40px] w-full flex-col gap-3 p-4 font-mono">
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="font-ui mb-1 text-sm">{{ item.name }}</h3>
                     <button
-                        class="text-mute flex items-center gap-1 text-[11px] active:text-white"
+                        class="flex items-center gap-1 text-[11px] ease-in active:text-white"
+                        :class="copySuccessState ? 'text-gain' : 'text-mute'"
                         @click="copyAddress"
                     >
                         {{ truncWalletAddress('ton', item.address.friendly) }}
-                        <Icon name="iconamoon:copy" size="1.3em" />
+                        <Icon v-if="copySuccessState" name="iconamoon:check-fill" size="1.3em" />
+                        <Icon v-else name="iconamoon:copy" size="1.3em" />
                     </button>
                 </div>
                 <div class="flex items-center gap-2">

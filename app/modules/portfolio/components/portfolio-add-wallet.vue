@@ -9,11 +9,19 @@ const { isError, address, addWalletToPortfolio } = useAddWallet()
 const store = usePortfolioStore()
 
 const addWallet = async () => {
+    if (address.value.length === 0) {
+        return
+    }
+
     if (!isValidTonAddress(address.value)) {
         isError.value = errorMap['invalid-ton']
         return
     }
-    if (store.portfolio.some((item) => item.address.friendly === address.value || item.address.raw === address.value)) {
+    if (
+        store.portfolio.some(
+            (item) => item.address.friendly === address.value || item.address.raw === address.value,
+        )
+    ) {
         isError.value = errorMap['already-added']
         return
     }
@@ -30,9 +38,5 @@ const addWallet = async () => {
 </script>
 
 <template>
-    <address-input
-        v-model="address"
-        :error="isError || undefined"
-        @add="addWallet"
-    />
+    <address-input v-model="address" :error="isError || undefined" @add="addWallet" />
 </template>

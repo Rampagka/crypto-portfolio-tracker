@@ -13,13 +13,13 @@ const getTransitionName = (animation?: ModalAnimation) => {
     <Teleport to="body">
         <div
             v-if="modal"
-            class="fixed inset-0 z-999 flex items-center justify-center bg-[rgba(0,0,0,0.4)]"
+            class="fixed inset-0 z-999 flex items-center justify-center bg-[rgba(0,0,0,0.4)] md:bg-[rgba(0,0,0,0.6)]"
             :class="[modal && modal.modalOptions.transparent ? 'bg-transparent' : '']"
             @click.self="!modal.modalOptions.disableBackdropClose && closeModal()"
         >
             <Transition :name="getTransitionName(modal.modalOptions.animation)" appear>
                 <div
-                    class="fixed bottom-0 w-full overflow-y-auto"
+                    class="fixed bottom-0 w-full overflow-y-auto md:bottom-auto md:block md:h-auto md:max-w-[400px] md:rounded-lg"
                     :class="[
                         modal.modalOptions.className,
                         modal.modalOptions.bare ? 'inset-0' : 'bg-surf2 mx-4 pb-3',
@@ -30,21 +30,29 @@ const getTransitionName = (animation?: ModalAnimation) => {
                               : 'max-h-[85vh] rounded-t-xl',
                     ]"
                 >
-                    <div class="px-4">
-                        <div class="flex items-center justify-center pt-2 pb-4">
+                    <div
+                        class="mb-4 px-4 md:mb-0 md:flex md:items-center md:justify-between md:py-4"
+                    >
+                        <div class="flex items-center justify-center pt-2 pb-4 md:hidden">
                             <div class="bg-mute h-1 w-16 rounded-2xl" />
                         </div>
                         <h4
                             v-if="modal.modalOptions.title"
-                            class="text-center text-[17px] leading-5.5 font-semibold"
+                            class="text-center text-[17px] leading-5.5 font-semibold md:text-[22px]"
                         >
                             {{ modal.modalOptions.title }}
                         </h4>
+                        <button
+                            class="hidden transition-opacity duration-[0.1s] ease-out active:opacity-50 md:flex"
+                            @click="closeModal"
+                        >
+                            <Icon name="iconamoon:close" size="2em" />
+                        </button>
                     </div>
 
                     <component
                         :is="modal.component"
-                        :class="modal.modalOptions.bare ? '' : 'px-4 pt-4 pb-8'"
+                        :class="modal.modalOptions.bare ? '' : 'px-4 pt-4 pb-8 md:pb-2'"
                         v-bind="modal.props"
                         @close="closeModal"
                         @result="closeModal"
@@ -64,5 +72,17 @@ const getTransitionName = (animation?: ModalAnimation) => {
 .modal-slide-bottom-enter-from,
 .modal-slide-bottom-leave-to {
     transform: translateY(100%);
+}
+
+@media screen and (min-width: 768px) {
+    .modal-slide-bottom-enter-active,
+    .modal-slide-bottom-leave-active {
+        transition: opacity 0.15s ease;
+    }
+    .modal-slide-bottom-enter-from,
+    .modal-slide-bottom-leave-to {
+        transform: translateY(0%);
+        opacity: 0;
+    }
 }
 </style>

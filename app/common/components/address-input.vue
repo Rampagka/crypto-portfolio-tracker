@@ -21,6 +21,7 @@ const emit = defineEmits<{
         <template #append>
             <button
                 class="add font-ui text-mute px-3.5 text-[12px] uppercase"
+                :disabled="!modelValue?.length"
                 @click.prevent="emit('add')"
             >
                 + Add
@@ -36,9 +37,13 @@ const emit = defineEmits<{
     outline: 1px solid transparent;
 }
 
-.add:active {
+.add:active:not(:disabled) {
     outline: 1px solid var(--color-accent);
     border-radius: 0 6px 6px 0;
     color: white;
+}
+
+.add:disabled {
+    cursor: not-allowed;
 }
 </style>

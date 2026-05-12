@@ -12,7 +12,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 md:items-start">
         <tab-ui
             v-for="tab in tabs"
             :key="tab.value"

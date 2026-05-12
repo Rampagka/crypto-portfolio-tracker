@@ -28,10 +28,13 @@ const count = computed(() => wallets.value.length.toString().padStart(2, '0'))
             </Transition>
         </div>
 
-        <template v-if="wallets.length || store.isAdding">
+        <div
+            v-if="wallets.length || store.isAdding"
+            class="flex flex-col gap-5 md:grid md:grid-cols-3"
+        >
             <wallet-item v-for="item in wallets" :key="item.address.raw" :item="item" />
             <wallet-item-skeleton v-if="store.isAdding" />
-        </template>
+        </div>
         <div v-else class="empty-state">
             <p class="text-mute font-mono text-[11px] tracking-widest uppercase">
                 No wallets tracked yet

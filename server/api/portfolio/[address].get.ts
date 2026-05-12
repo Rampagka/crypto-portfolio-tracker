@@ -30,7 +30,7 @@ export default defineCachedEventHandler(
         throw createError({ statusCode: 400, message: `Unsupported chain: ${chain}` })
     },
     {
-        maxAge: 40,
+        maxAge: 60,
         shouldBypassCache: () => import.meta.dev,
         getKey: (event) => {
             const address = getRouterParam(event, 'address')

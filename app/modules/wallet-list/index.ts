@@ -1,1 +1,1 @@
-export { WalletList } from '@/modules/wallet-list/components'
+export { WalletList, WalletItemSkeleton } from '@/modules/wallet-list/components'
