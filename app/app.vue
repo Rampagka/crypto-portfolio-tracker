@@ -6,7 +6,6 @@ import ModalWrapper from '@/common/wrappers/modal-wrapper.vue'
 import { usePortfolioPolling } from '@/modules/portfolio'
 
 usePortfolioPolling()
-if (import.meta.client) useChainTheme()
 
 useHead({
     titleTemplate: (title) =>

@@ -42,7 +42,7 @@ const copyAddress = async () => {
     <card-wrapper :with-neon-animation="true" class="w-full">
         <div class="flex min-h-[40px] w-full flex-col gap-3 p-4 font-mono">
             <div class="flex items-start justify-between">
-                <div>
+                <div class="max-w-[80dvw]">
                     <h3 class="font-ui mb-1 text-sm">{{ item.name }}</h3>
                     <button
                         class="flex items-center gap-1 text-[11px] ease-in active:text-white"
@@ -71,7 +71,7 @@ const copyAddress = async () => {
             </div>
 
             <!-- баланс + diff -->
-            <div class="flex items-end justify-between">
+            <div class="flex max-w-[80dvw] items-end justify-between">
                 <template v-if="store.isSyncing">
                     <div class="flex flex-col gap-1.5">
                         <div class="sk" style="width: 130px; height: 30px" />
@@ -82,6 +82,7 @@ const copyAddress = async () => {
                 <template v-else>
                     <div>
                         <h2 class="mb-0.5 text-[20px]">
+                            <!--                            $372,213.,3213123.321312.321.00.321321.213-->
                             {{ getFormattedAmount(item.totalBalanceUsd, 'USD') }}
                         </h2>
                         <p class="text-mute text-[12px]">

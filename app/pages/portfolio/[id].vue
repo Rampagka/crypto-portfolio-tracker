@@ -8,8 +8,11 @@ const chain = computed(() => {
     return (Array.isArray(id) ? id[0] : id)?.toUpperCase() ?? 'TON'
 })
 
+const chainLower = computed(() => chain.value.toLowerCase())
+
 useHead({
     title: computed(() => `${chain.value} Portfolio`),
+    htmlAttrs: { 'data-theme': chainLower },
     meta: [
         {
             name: 'description',
