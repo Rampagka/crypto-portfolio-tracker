@@ -1,6 +1,7 @@
 import { fetchPortfolio } from '@/modules/portfolio/services/portfolio.service'
 
 const POLL_INTERVAL_MS = 65_000
+const PAUSE_AFTER_HIDDEN_MS = 60_000
 
 export const usePortfolioPolling = () => {
     const store = usePortfolioStore()
@@ -31,6 +32,30 @@ export const usePortfolioPolling = () => {
 
     const { start, stop } = usePolling(refreshAllWallets, POLL_INTERVAL_MS)
 
+    let pauseTimer: ReturnType<typeof setTimeout> | null = null
+    let pausedByVisibility = false
+
+    const onVisibilityChange = () => {
+        if (document.hidden) {
+            pauseTimer = setTimeout(() => {
+                if (store.currentChainWallets.length > 0) {
+                    stop()
+                    pausedByVisibility = true
+                }
+            }, PAUSE_AFTER_HIDDEN_MS)
+        } else {
+            if (pauseTimer) {
+                clearTimeout(pauseTimer)
+                pauseTimer = null
+            }
+            if (pausedByVisibility && store.currentChainWallets.length > 0) {
+                pausedByVisibility = false
+                refreshAllWallets()
+                start()
+            }
+        }
+    }
+
     watch(
         [() => store.currentChainWallets.length, () => store.currentChain],
         ([count, chain], [, prevChain]) => {
@@ -43,9 +68,15 @@ export const usePortfolioPolling = () => {
     )
 
     onMounted(async () => {
+        document.addEventListener('visibilitychange', onVisibilityChange)
         if (store.currentChainWallets.length > 0) {
             await refreshAllWallets()
             start()
         }
+    })
+
+    onUnmounted(() => {
+        document.removeEventListener('visibilitychange', onVisibilityChange)
+        if (pauseTimer) clearTimeout(pauseTimer)
     })
 }

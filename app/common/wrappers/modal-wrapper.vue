@@ -19,15 +19,15 @@ const getTransitionName = (animation?: ModalAnimation) => {
         >
             <Transition :name="getTransitionName(modal.modalOptions.animation)" appear>
                 <div
-                    class="fixed bottom-0 w-full overflow-y-auto md:bottom-auto md:block md:h-auto md:max-w-[400px] md:rounded-lg"
+                    class="w-[calc(100dvw - 12px)] fixed right-[6px] bottom-[6px] left-[6px] overflow-y-auto md:right-auto md:bottom-auto md:left-auto md:block md:h-auto md:w-full md:max-w-[400px] md:rounded-lg"
                     :class="[
                         modal.modalOptions.className,
-                        modal.modalOptions.bare ? 'inset-0' : 'bg-surf2 mx-4 pb-3',
+                        modal.modalOptions.bare ? 'inset-0' : 'bg-modal pb-3',
                         modal.modalOptions.bare
                             ? ''
                             : modal.modalOptions.fullScreen
                               ? 'h-dvh rounded-none'
-                              : 'max-h-[85vh] rounded-t-xl',
+                              : 'max-h-[85vh] rounded-[14px]',
                     ]"
                 >
                     <div
