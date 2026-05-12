@@ -45,6 +45,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
         baseTonapi: '',
         apiKey: '',
+        moralisKey: '',
         public: {
             appName: 'Crypto portfolio tracker',
             siteUrl: '',

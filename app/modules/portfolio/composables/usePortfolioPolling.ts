@@ -31,10 +31,16 @@ export const usePortfolioPolling = () => {
 
     const { start, stop } = usePolling(refreshAllWallets, POLL_INTERVAL_MS)
 
-    watch([() => store.currentChainWallets.length, () => store.currentChain], ([count]) => {
-        stop()
-        if (count > 0) start()
-    })
+    watch(
+        [() => store.currentChainWallets.length, () => store.currentChain],
+        ([count, chain], [, prevChain]) => {
+            stop()
+            if (count > 0) {
+                if (chain !== prevChain) refreshAllWallets()
+                start()
+            }
+        },
+    )
 
     onMounted(async () => {
         if (store.currentChainWallets.length > 0) {

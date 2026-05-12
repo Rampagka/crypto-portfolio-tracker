@@ -1,9 +1,11 @@
 import { fromNano } from '@/common/utils/ton-amounts'
 
 import type { PortfolioData, TokenItem } from '@/modules/portfolio'
+import type { MoralisWalletResponse } from '~/common/models/interfaces/eth.interface'
 import type { TonAccount, TonAccountInfo, TonRates } from '~/common/models/interfaces/ton.interface'
 import type { Chain } from '~/common/models/types/networks.type'
 
+import EthAddress from '#server/utils/eth/eth-address'
 import TonAddress from '#server/utils/ton/ton-address'
 
 const parsePercent = (str?: string): number => parseFloat((str ?? '0').replace('−', '-')) || 0
@@ -75,5 +77,75 @@ export function mapPortfolio(
 
     asset.topTokens = asset.topTokens.sort((a, b) => b.totalUsd - a.totalUsd).slice(0, 3)
 
+    return asset
+}
+
+export function mapEthPortfolio(
+    rawAddress: string,
+    data: MoralisWalletResponse,
+    name: string,
+): PortfolioData {
+    const ethAmount = Number(data.nativeBalance.balance) / 1e18
+    const ethValueUsd = ethAmount * data.nativeBalance.usd_price
+
+    const asset: PortfolioData = {
+        id: crypto.randomUUID(),
+        name,
+        chain: 'eth',
+        address: {
+            raw: EthAddress.toRaw(rawAddress),
+            friendly: EthAddress.toChecksum(rawAddress),
+        },
+        totalBalanceUsd: ethValueUsd,
+        totalDiff24h: 0,
+        nativeToken: {
+            symbol: 'ETH',
+            amount: ethAmount,
+            priceUsd: data.nativeBalance.usd_price,
+            change24h: data.nativeBalance.usd_24hr_change,
+        },
+        topTokens: [],
+    }
+
+    const weighted = [{ valueUsd: ethValueUsd, change24h: data.nativeBalance.usd_24hr_change }]
+
+    for (const token of data.tokens) {
+        if (!token.usd_price || !token.usd_value) continue
+        if ((token.security_score ?? 0) < 50) continue
+        // пропускаем ETH-деривативы — они уже учтены в nativeToken
+        if (
+            ['eth', 'weth', 'steth', 'wsteth', 'cbeth', 'reth'].includes(token.symbol.toLowerCase())
+        )
+            continue
+
+        const amount = Number(token.balance) / 10 ** (token.decimals || 18)
+
+        asset.totalBalanceUsd += token.usd_value
+        weighted.push({
+            valueUsd: token.usd_value,
+            change24h: token.usd_price_24hr_percent_change ?? 0,
+        })
+
+        asset.topTokens.push({
+            address: token.token_address,
+            name: token.name,
+            symbol: token.symbol,
+            decimals: token.decimals,
+            image: token.thumbnail,
+            amount,
+            priceUsd: token.usd_price,
+            totalUsd: token.usd_value,
+            change24h: token.usd_price_24hr_percent_change ?? 0,
+        } as TokenItem)
+    }
+
+    if (asset.totalBalanceUsd > 0) {
+        asset.totalDiff24h = weighted.reduce(
+            (acc, { valueUsd, change24h }) => acc + (valueUsd / asset.totalBalanceUsd) * change24h,
+            0,
+        )
+    }
+
+    asset.topTokens = asset.topTokens.sort((a, b) => b.totalUsd - a.totalUsd).slice(0, 3)
     return asset
 }

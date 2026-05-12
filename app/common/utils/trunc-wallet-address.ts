@@ -6,9 +6,10 @@ export const truncWalletAddress = (
     symbols: number = 4,
     divider: string = '...',
 ): string => {
-    if (chain === 'ton') {
-        return address.slice(0, symbols) + divider + address.slice(-symbols, address.length)
-    } else {
-        return address
+    switch (chain) {
+        case 'ton':
+            return address.slice(0, symbols) + divider + address.slice(-symbols)
+        case 'eth':
+            return address.slice(0, 6) + divider + address.slice(-4)
     }
 }
