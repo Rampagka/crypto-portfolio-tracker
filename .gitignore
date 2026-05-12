@@ -26,7 +26,6 @@ nul
 # Markdown — ignore planning/notes, keep docs
 *.md
 !README.md
-!CLAUDE.md
 
 # Local env files
 .env
