@@ -41,7 +41,7 @@ const copyAddress = async () => {
 <template>
     <card-wrapper :with-neon-animation="true" class="w-full">
         <div class="flex min-h-[40px] w-full flex-col gap-3 p-4 font-mono">
-            <div class="flex items-center justify-between">
+            <div class="flex items-start justify-between">
                 <div>
                     <h3 class="font-ui mb-1 text-sm">{{ item.name }}</h3>
                     <button
@@ -86,7 +86,10 @@ const copyAddress = async () => {
                         </h2>
                         <p class="text-mute text-[12px]">
                             {{
-                                getFormattedAmount(item?.nativeToken?.amount, 'TON') +
+                                getFormattedAmount(
+                                    item?.nativeToken?.amount,
+                                    store.currentChain.toUpperCase(),
+                                ) +
                                 ` | ${getFormattedAmount((item?.nativeToken?.priceUsd ?? 0) * (item?.nativeToken?.amount ?? 0), 'USD')}`
                             }}
                         </p>

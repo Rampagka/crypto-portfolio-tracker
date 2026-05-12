@@ -27,19 +27,25 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex min-w-[320px] flex-col gap-5">
+    <div class="flex flex-col gap-5">
         <div class="flex flex-col gap-5 md:mb-5 md:flex-row">
-            <!--            <app-tabs-->
-            <!--                :tabs="tabList"-->
-            <!--                :current="currentTab"-->
-            <!--                @select-tab="selectTab"-->
-            <!--                class="flex-1"-->
-            <!--            />-->
+            <app-tabs
+                :tabs="tabList"
+                :current="currentTab"
+                class="flex-1 md:hidden"
+                @select-tab="selectTab"
+            />
             <wallet-dashboard class="flex-1" />
-            <portfolio-add-wallet class="flex-1" />
+            <div class="flex-1 md:flex md:flex-col md:justify-between">
+                <app-tabs
+                    :tabs="tabList"
+                    :current="currentTab"
+                    class="hidden md:flex"
+                    @select-tab="selectTab"
+                />
+                <portfolio-add-wallet />
+            </div>
         </div>
-        <!--        <portfolio-add-wallet />-->
-        <!-- todo: Вернуть как появятся две сети ton/eth -->
     </div>
     <div class="flex w-full flex-col gap-5">
         <wallet-list />

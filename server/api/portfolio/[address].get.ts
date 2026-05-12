@@ -1,6 +1,8 @@
 import type { Chain } from '~/common/models/types/networks.type'
 
-import { mapPortfolio } from '#server/utils/portfolio-mapper'
+import EthAddress from '#server/utils/eth/eth-address'
+import EthClient from '#server/utils/eth/eth-client'
+import { mapEthPortfolio, mapPortfolio } from '#server/utils/portfolio-mapper'
 import TonAddress from '#server/utils/ton/ton-address'
 import TonClient from '#server/utils/ton/ton-client'
 
@@ -25,6 +27,13 @@ export default defineCachedEventHandler(
             }
             const client = new TonClient()
             return await getTonPortfolio(address, client, walletName, chain)
+        }
+
+        if (chain === 'eth') {
+            EthAddress.validate(address)
+            const client = new EthClient()
+            const data = await client.getWalletPortfolio(address)
+            return mapEthPortfolio(address, data, walletName)
         }
 
         throw createError({ statusCode: 400, message: `Unsupported chain: ${chain}` })

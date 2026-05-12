@@ -58,13 +58,12 @@ export const usePortfolioStore = defineStore(
             return portfolio.value.filter((it) => it.chain === 'ton')
         })
 
-        // const getEthWallets = computed<UserWallets>(() => {
-        //     return portfolio.value.filter((it) => it.chain === 'eth')
-        // })
+        const getEthWallets = computed<UserWallets>(() => {
+            return portfolio.value.filter((it) => it.chain === 'eth')
+        })
 
         const currentChainWallets = computed<UserWallets>(() => {
-            // return currentChain.value === 'ton' ? getTonWallets.value : getEthWallets.value
-            return getTonWallets.value
+            return currentChain.value === 'ton' ? getTonWallets.value : getEthWallets.value
         })
 
         watchEffect(() => {
@@ -89,7 +88,7 @@ export const usePortfolioStore = defineStore(
             renameWallet,
 
             getTonWallets,
-            // getEthWallets,
+            getEthWallets,
             currentChainWallets,
         }
     },

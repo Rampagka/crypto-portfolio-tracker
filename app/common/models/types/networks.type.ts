@@ -1,6 +1,6 @@
 export const NETWORKS = {
     ton: 'TON',
-    // eth: 'ETH',
+    eth: 'ETH',
 } as const
 
 export type Chain = keyof typeof NETWORKS // "ton" | "eth"

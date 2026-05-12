@@ -3,7 +3,7 @@ import { useAddWallet } from '~/modules/portfolio/composables/useAddWallet'
 import { openModal } from '~/common/composables/useModal'
 import AddWalletModal from '~/modules/portfolio/modals/add-wallet-modal.vue'
 import { errorMap } from '~/modules/portfolio/helpers/inputs-error-map'
-import { isValidTonAddress } from '~/modules/portfolio/helpers/validate-address'
+import { isValidEthAddress, isValidTonAddress } from '~/modules/portfolio/helpers/validate-address'
 
 const { isError, address, addWalletToPortfolio } = useAddWallet()
 const store = usePortfolioStore()
@@ -12,8 +12,11 @@ const addWallet = async () => {
     if (address.value.length === 0) {
         return
     }
-
-    if (!isValidTonAddress(address.value)) {
+    if (store.currentChain === 'eth' && !isValidEthAddress(address.value)) {
+        isError.value = errorMap['invalid-eth']
+        return
+    }
+    if (store.currentChain === 'ton' && !isValidTonAddress(address.value)) {
         isError.value = errorMap['invalid-ton']
         return
     }
