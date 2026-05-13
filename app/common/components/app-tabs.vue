@@ -17,6 +17,7 @@ const emit = defineEmits<{
             v-for="tab in tabs"
             :key="tab.value"
             :is-active="current === tab.value"
+            :data-test="`tab-${tab.value}`"
             @click="emit('selectTab', tab.value)"
         >
             {{ tab.label }}

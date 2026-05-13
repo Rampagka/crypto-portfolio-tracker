@@ -7,7 +7,9 @@
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
-        "postinstall": "nuxt prepare"
+        "postinstall": "nuxt prepare",
+        "prepare": "husky",
+        "test": "vitest run"
     },
     "lint-staged": {
         "*.{vue,ts,tsx}": [
@@ -35,14 +37,20 @@
         "vue-router": "^5.0.6"
     },
     "devDependencies": {
+        "@nuxt/test-utils": "^4.0.3",
+        "@pinia/testing": "^1.0.3",
         "@trivago/prettier-plugin-sort-imports": "^6.0.2",
         "@types/node": "^25.6.0",
+        "@vue/test-utils": "^2.4.10",
         "eslint": "^10.3.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-import-x": "^4.16.2",
         "eslint-plugin-project-structure": "^3.14.3",
+        "happy-dom": "^20.9.0",
         "husky": "^9.1.7",
+        "playwright-core": "^1.60.0",
         "prettier": "^3.8.3",
-        "prettier-plugin-tailwindcss": "^0.8.0"
+        "prettier-plugin-tailwindcss": "^0.8.0",
+        "vitest": "^4.1.6"
     }
 }

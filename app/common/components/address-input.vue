@@ -16,12 +16,14 @@ const emit = defineEmits<{
         :error="error"
         placeholder="Paste TON address..."
         autocomplete="none"
+        data-test="address-input"
         @update:model-value="emit('update:modelValue', $event)"
     >
         <template #append>
             <button
                 class="add font-ui text-mute px-3.5 text-[12px] uppercase"
                 :disabled="!modelValue?.length"
+                data-test="add-btn"
                 @click.prevent="emit('add')"
             >
                 + Add

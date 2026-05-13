@@ -24,6 +24,7 @@ const onBlur = () => {
 
 <template>
     <input-ui
+        data-test="wallet-name"
         :model-value="modelValue"
         :error="error"
         placeholder="Add a name for your wallet"

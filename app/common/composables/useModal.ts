@@ -1,11 +1,17 @@
 import type { Modal } from '~/common/models/interfaces/modal.interface'
 
+import { markRaw } from 'vue'
+
 const useModalState = () => useState<Modal | null>('current-modal', () => null)
 
 export const openModal = <T = unknown>(opts: Omit<Modal<T>, 'resolve'>): Promise<T> => {
     const modal = useModalState()
     return new Promise<T>((resolve) => {
-        modal.value = { ...opts, resolve: resolve as (value: unknown) => void }
+        modal.value = {
+            ...opts,
+            component: markRaw(opts.component),
+            resolve: resolve as (value: unknown) => void,
+        }
     })
 }
 
