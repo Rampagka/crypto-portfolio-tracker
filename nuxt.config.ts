@@ -30,6 +30,7 @@ export default defineNuxtConfig({
         '@nuxt/eslint',
         '@nuxt/icon',
         'pinia-plugin-persistedstate/nuxt',
+        '@nuxt/test-utils/module',
     ],
 
     icon: {
