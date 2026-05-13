@@ -37,3 +37,4 @@ nul
 design
 design/*.html
 design/*.jsx
+.nuxtrc
