@@ -55,8 +55,16 @@ body::after {
     right: -20%;
     height: 100dvh;
     background:
-        radial-gradient(ellipse at 30% 50%, color-mix(in srgb, var(--color-ton), transparent 94%), transparent 50%),
-        radial-gradient(ellipse at 70% 50%, color-mix(in srgb, var(--color-eth), transparent 93%), transparent 50%);
+        radial-gradient(
+            ellipse at 30% 50%,
+            color-mix(in srgb, var(--color-ton), transparent 94%),
+            transparent 50%
+        ),
+        radial-gradient(
+            ellipse at 70% 50%,
+            color-mix(in srgb, var(--color-eth), transparent 93%),
+            transparent 50%
+        );
     pointer-events: none;
     transform: rotateZ(10deg);
     z-index: 1;
@@ -100,8 +108,18 @@ input[type='range']::-webkit-slider-thumb {
     box-shadow: 0 0 6px var(--color-ton);
 }
 
-button, a {
+button,
+a {
     cursor: pointer;
+}
+
+.layout-content {
+    padding-top: calc(80px + env(safe-area-inset-top));
+}
+@media (min-width: 1024px) {
+    .layout-content {
+        padding-top: calc(110px + env(safe-area-inset-top));
+    }
 }
 
 @utility font-ui {
@@ -152,22 +170,35 @@ button, a {
 }
 
 @keyframes skel-sweep {
-    0%   { transform: translateX(-100%); }
-    100% { transform: translateX(300%); }
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(300%);
+    }
 }
 
 @keyframes skel-pulse {
-    0%, 100% { background: rgba(136, 136, 170, 0.12); }
-    50%       { background: rgba(136, 136, 170, 0.20); }
+    0%,
+    100% {
+        background: rgba(136, 136, 170, 0.12);
+    }
+    50% {
+        background: rgba(136, 136, 170, 0.2);
+    }
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes neon-flash {
     0% {
-        box-shadow: 0 0 0 1px transparent, 0 0 0 transparent;
+        box-shadow:
+            0 0 0 1px transparent,
+            0 0 0 transparent;
     }
     30% {
         box-shadow:
@@ -175,6 +206,8 @@ button, a {
             0 0 20px color-mix(in srgb, var(--color-accent), transparent 40%);
     }
     100% {
-        box-shadow: 0 0 0 1px transparent, 0 0 0 transparent;
+        box-shadow:
+            0 0 0 1px transparent,
+            0 0 0 transparent;
     }
 }
