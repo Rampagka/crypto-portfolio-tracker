@@ -23,8 +23,8 @@ html {
     scrollbar-gutter: stable;
 }
 
-/* Grid background — temporarily disabled to debug Safari stacking context issues */
-/* body::before {
+/* Grid background */
+body::before {
     content: '';
     position: fixed;
     inset: 0;
@@ -34,10 +34,10 @@ html {
     background-size: var(--grid-size) var(--grid-size);
     pointer-events: none;
     z-index: 0;
-} */
+}
 
-/* Ambient glow — temporarily disabled to debug Safari stacking context issues */
-/* body::after {
+/* Ambient glow */
+body::after {
     content: '';
     position: fixed;
     top: -80px;
@@ -45,12 +45,20 @@ html {
     right: -20%;
     height: 100dvh;
     background:
-        radial-gradient(ellipse at 30% 50%, color-mix(in srgb, var(--color-ton), transparent 94%), transparent 50%),
-        radial-gradient(ellipse at 70% 50%, color-mix(in srgb, var(--color-eth), transparent 93%), transparent 50%);
+        radial-gradient(
+            ellipse at 30% 50%,
+            color-mix(in srgb, var(--color-ton), transparent 94%),
+            transparent 50%
+        ),
+        radial-gradient(
+            ellipse at 70% 50%,
+            color-mix(in srgb, var(--color-eth), transparent 93%),
+            transparent 50%
+        );
     pointer-events: none;
     transform: rotateZ(10deg);
-    z-index: 1;
-} */
+    z-index: 0;
+}
 
 html,
 body {
