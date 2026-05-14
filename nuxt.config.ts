@@ -5,6 +5,20 @@ export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
     devtools: { enabled: true },
 
+    app: {
+        head: {
+            meta: [
+                {
+                    name: 'viewport',
+                    content:
+                        'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover',
+                },
+                { name: 'theme-color', content: '#0a0a0f' },
+                { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+            ],
+        },
+    },
+
     routeRules: {
         '/': { prerender: true, redirect: { to: '/portfolio/ton', statusCode: 301 } },
     },
