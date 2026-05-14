@@ -12,7 +12,12 @@ useHead({
         title ? `${title} | Crypto Portfolio Tracker` : 'Crypto Portfolio Tracker',
     meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
+        {
+            name: 'viewport',
+            content:
+                'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover',
+        },
+        { name: 'theme-color', content: '#0a0a0f' },
         {
             name: 'description',
             content:
