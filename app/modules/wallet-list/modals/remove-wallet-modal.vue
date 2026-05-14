@@ -8,6 +8,7 @@ const props = defineProps<{
 
 const removeWallet = () => {
     store.removeWalletById(props.walletShort.id)
+    showToast('Wallet removed')
     emit('close')
 }
 </script>

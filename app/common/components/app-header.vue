@@ -2,7 +2,7 @@
 
 <template>
     <header
-        class="header bg-bg border-border fixed top-0 right-0 left-0 z-100 flex min-h-[58px] items-center justify-between border-b px-4"
+        class="header bg-bg border-border fixed top-0 right-0 left-0 z-100 flex min-h-[58px] items-center justify-between border-b px-4 pt-[env(safe-area-inset-top)]"
     >
         <div class="flex w-full items-center justify-between md:mx-auto md:max-w-[1100px] md:px-4">
             <h1 class="logo text-[24px] tracking-wide">ASTRA</h1>

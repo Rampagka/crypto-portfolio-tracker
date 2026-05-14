@@ -1,7 +1,7 @@
 import AddWalletModal from '~/modules/portfolio/modals/add-wallet-modal.vue'
 
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import { describe, expect, it, vi } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 const stubs = {
     'button-ui': {
@@ -17,25 +17,20 @@ const stubs = {
     },
 }
 
-const mount = (addWalletToPortfolio = vi.fn().mockResolvedValue(undefined)) =>
-    mountSuspended(AddWalletModal, {
-        props: { addWalletToPortfolio },
-        global: { stubs },
-    })
+const mount = () => mountSuspended(AddWalletModal, { global: { stubs } })
 
 describe('add-wallet-modal', () => {
-    it('calls addWalletToPortfolio with the current wallet name', async () => {
-        const addFn = vi.fn().mockResolvedValue(undefined)
-        const wrapper = await mount(addFn)
-        await wrapper.find('button').trigger('click')
-        expect(addFn).toHaveBeenCalledWith('MyWallet')
-    })
-
-    it('emits close after adding', async () => {
+    it('emits result with default name on click', async () => {
         const wrapper = await mount()
         await wrapper.find('button').trigger('click')
-        await nextTick()
-        expect(wrapper.emitted('close')).toBeTruthy()
+        expect(wrapper.emitted('result')?.[0]).toEqual(['MyWallet'])
+    })
+
+    it('emits result with typed name', async () => {
+        const wrapper = await mount()
+        await wrapper.find('input').setValue('CoolWallet')
+        await wrapper.find('button').trigger('click')
+        expect(wrapper.emitted('result')?.[0]).toEqual(['CoolWallet'])
     })
 
     it('disables button when name is empty', async () => {
@@ -44,11 +39,10 @@ describe('add-wallet-modal', () => {
         expect(wrapper.find('button').attributes('disabled')).toBeDefined()
     })
 
-    it('uses the typed name when calling addWalletToPortfolio', async () => {
-        const addFn = vi.fn().mockResolvedValue(undefined)
-        const wrapper = await mount(addFn)
-        await wrapper.find('input').setValue('CoolWallet')
+    it('does not emit result when name is empty', async () => {
+        const wrapper = await mount()
+        await wrapper.find('input').setValue('')
         await wrapper.find('button').trigger('click')
-        expect(addFn).toHaveBeenCalledWith('CoolWallet')
+        expect(wrapper.emitted('result')).toBeFalsy()
     })
 })

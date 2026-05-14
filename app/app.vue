@@ -12,7 +12,7 @@ useHead({
         title ? `${title} | Crypto Portfolio Tracker` : 'Crypto Portfolio Tracker',
     meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
         {
             name: 'description',
             content:
@@ -37,6 +37,7 @@ useHead({
         <NuxtPage />
     </NuxtLayout>
     <modal-wrapper />
+    <toast-notification />
 </template>
 
 <style></style>

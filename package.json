@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "build": "nuxt build",
-        "dev": "nuxt dev",
+        "dev": "nuxt dev --host",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",
@@ -27,6 +27,7 @@
         "@pinia/nuxt": "^0.11.3",
         "@tailwindcss/vite": "^4.2.4",
         "@ton/core": "^0.63.1",
+        "body-scroll-lock-upgrade": "^1.1.0",
         "lint-staged": "^16.4.0",
         "nuxt": "^4.4.4",
         "pinia": "^3.0.4",

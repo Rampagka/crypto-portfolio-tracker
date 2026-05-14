@@ -14,6 +14,7 @@ const walletName = ref<string>(initialName)
 
 const changeName = () => {
     store.renameWallet(props.walletShort.id, walletName.value)
+    showToast('Wallet renamed')
     emit('close')
 }
 

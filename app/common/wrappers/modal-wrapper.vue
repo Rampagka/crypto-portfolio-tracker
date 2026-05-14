@@ -1,12 +1,34 @@
 <script setup lang="ts">
 import { closeModal, useCurrentModal } from '@/common/composables/useModal'
 import type { ModalAnimation } from '~/common/models/interfaces/modal.interface'
+
 const modal = useCurrentModal()
 
 const getTransitionName = (animation?: ModalAnimation) => {
     if (animation === 'none') return undefined
     return `modal-${animation || 'slide-bottom'}`
 }
+
+const keyboardOffset = ref(0)
+
+onMounted(() => {
+    if (!window.visualViewport) return
+    const update = () => {
+        const offset =
+            window.innerHeight - window.visualViewport!.offsetTop - window.visualViewport!.height
+        keyboardOffset.value = Math.max(0, offset)
+    }
+    window.visualViewport.addEventListener('resize', update)
+    window.visualViewport.addEventListener('scroll', update)
+    onUnmounted(() => {
+        window.visualViewport?.removeEventListener('resize', update)
+        window.visualViewport?.removeEventListener('scroll', update)
+    })
+})
+
+const bottomStyle = computed(() =>
+    keyboardOffset.value > 0 ? { bottom: `${6 + keyboardOffset.value}px` } : {},
+)
 </script>
 
 <template>
@@ -19,7 +41,8 @@ const getTransitionName = (animation?: ModalAnimation) => {
         >
             <Transition :name="getTransitionName(modal.modalOptions.animation)" appear>
                 <div
-                    class="w-[calc(100dvw - 12px)] fixed right-[6px] bottom-[6px] left-[6px] overflow-y-auto md:right-auto md:bottom-auto md:left-auto md:block md:h-auto md:w-full md:max-w-[400px] md:rounded-lg"
+                    class="modal-scroll-target w-[calc(100dvw - 12px)] fixed right-[6px] bottom-[6px] left-[6px] overflow-y-auto md:right-auto md:bottom-auto md:left-auto md:block md:h-auto md:w-full md:max-w-[400px] md:rounded-lg"
+                    :style="bottomStyle"
                     :class="[
                         modal.modalOptions.className,
                         modal.modalOptions.bare ? 'inset-0' : 'bg-modal pb-3',

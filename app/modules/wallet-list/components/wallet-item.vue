@@ -29,6 +29,7 @@ const copyAddress = async () => {
         const address = props.item.address.friendly
         await navigator.clipboard.writeText(address)
         copySuccessState.value = true
+        showToast('Address copied')
     } catch (err) {
         console.error(err)
         throw err

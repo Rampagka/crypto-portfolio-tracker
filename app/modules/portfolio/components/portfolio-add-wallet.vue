@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useAddWallet } from '~/modules/portfolio/composables/useAddWallet'
-import { openModal } from '~/common/composables/useModal'
 import AddWalletModal from '~/modules/portfolio/modals/add-wallet-modal.vue'
+import { openModal } from '~/common/composables/useModal'
+import { useAddWallet } from '~/modules/portfolio/composables/useAddWallet'
 import { errorMap } from '~/modules/portfolio/helpers/inputs-error-map'
 import { isValidEthAddress, isValidTonAddress } from '~/modules/portfolio/helpers/validate-address'
 
@@ -9,9 +9,8 @@ const { isError, address, addWalletToPortfolio } = useAddWallet()
 const store = usePortfolioStore()
 
 const addWallet = async () => {
-    if (address.value.length === 0) {
-        return
-    }
+    if (address.value.length === 0) return
+
     if (store.currentChain === 'eth' && !isValidEthAddress(address.value)) {
         isError.value = errorMap['invalid-eth']
         return
@@ -28,15 +27,16 @@ const addWallet = async () => {
         isError.value = errorMap['already-added']
         return
     }
-    await openModal({
+
+    const name = await openModal<string>({
         component: AddWalletModal,
-        modalOptions: {
-            title: 'Add wallet name',
-        },
-        props: {
-            addWalletToPortfolio,
-        },
+        modalOptions: { title: 'Add wallet name' },
     })
+
+    if (!name) return
+
+    await addWalletToPortfolio(name)
+    if (!isError.value) showToast('Wallet added')
 }
 </script>
 

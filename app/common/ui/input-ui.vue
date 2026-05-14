@@ -89,7 +89,7 @@ defineEmits<{
     outline: none;
     color: #fff;
     font-family: var(--font-mono);
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 0.2px;
 }
 
