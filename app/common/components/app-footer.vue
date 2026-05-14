@@ -15,7 +15,9 @@ const contacts = {
 </script>
 
 <template>
-    <footer class="footer border-border align-items flex justify-between border-t px-4 py-2">
+    <footer
+        class="footer border-border relative z-1 flex items-center justify-between border-t px-4 py-2"
+    >
         <div>
             <p class="text-gain font-mono text-lg">free · open · no auth</p>
             <p class="text-sm">©2026 Astra</p>
