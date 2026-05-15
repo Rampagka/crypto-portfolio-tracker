@@ -167,12 +167,17 @@ test/
 ## Testing
 
 ```bash
-npm test                          # all 127 tests
+npm test                          # all unit + nuxt tests (vitest)
 npx vitest run --project unit     # unit only (42 tests, ~1s)
 npx vitest run --project nuxt     # nuxt env tests (85 tests)
+
+npm run test:e2e                  # Playwright e2e (requires dev server running)
+npm run test:e2e:ui               # Playwright UI mode
 ```
 
-GitHub Actions runs the full suite on push/PR to `main`.
+Unit and nuxt tests live in `*/test/` subfolders next to the code they cover. E2e tests live in `tests/e2e/` — all external API calls are mocked via `page.route()`, so no real API keys are needed to run them.
+
+GitHub Actions runs the full suite on push/PR to `main`: vitest first, then Playwright with browser install.
 
 ---
 
@@ -184,7 +189,9 @@ GitHub Actions runs the full suite on push/PR to `main`.
 | `npm run build` | Type-check + production build |
 | `npm run preview` | Preview the production build locally |
 | `npm run generate` | Static site generation |
-| `npm test` | Run all 127 vitest tests |
+| `npm test` | Run all vitest tests (unit + nuxt) |
+| `npm run test:e2e` | Run Playwright e2e tests |
+| `npm run test:e2e:ui` | Playwright UI mode |
 
 Linting and formatting run automatically on pre-commit via `lint-staged` + `husky`. To run manually:
 
