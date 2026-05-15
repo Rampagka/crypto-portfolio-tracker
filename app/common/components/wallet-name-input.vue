@@ -26,6 +26,7 @@ const onBlur = () => {
     <input-ui
         data-test="wallet-name"
         :model-value="modelValue"
+        role="wallet-name-input"
         :error="error"
         placeholder="Add a name for your wallet"
         autocomplete="none"

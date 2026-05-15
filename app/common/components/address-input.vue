@@ -2,6 +2,7 @@
 defineProps<{
     modelValue?: string
     error?: string
+    placeholder: string
 }>()
 
 const emit = defineEmits<{
@@ -14,7 +15,8 @@ const emit = defineEmits<{
     <input-ui
         :model-value="modelValue"
         :error="error"
-        placeholder="Paste TON address..."
+        role="address-input"
+        :placeholder="placeholder"
         autocomplete="none"
         data-test="address-input"
         @update:model-value="emit('update:modelValue', $event)"

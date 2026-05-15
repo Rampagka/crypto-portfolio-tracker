@@ -23,13 +23,6 @@ export default defineConfig({
                     environment: 'node',
                 },
             },
-            {
-                test: {
-                    name: 'e2e',
-                    include: ['test/e2e/*.{test,spec}.ts'],
-                    environment: 'node',
-                },
-            },
             await defineVitestProject({
                 resolve: {
                     alias: {
@@ -44,7 +37,7 @@ export default defineConfig({
                         './app/modules/**/{components,composables,store,modals}/test/*.{test,spec}.ts',
                     ],
                     environment: 'nuxt',
-                    setupFiles: ['./test/setup/nuxt-warn-filter.ts'],
+                    setupFiles: ['./tests/setup/nuxt-warn-filter.ts'],
                 },
             }),
         ],

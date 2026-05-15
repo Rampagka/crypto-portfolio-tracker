@@ -5,6 +5,7 @@ defineProps<{
     error?: string
     prefix?: string
     type?: string
+    role: string
 }>()
 
 defineEmits<{
@@ -20,6 +21,7 @@ defineEmits<{
                 :value="modelValue"
                 :placeholder="placeholder"
                 :type="type ?? 'text'"
+                :data-test="role"
                 class="input-field"
                 v-bind="$attrs"
                 @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"

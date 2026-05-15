@@ -32,7 +32,12 @@ const count = computed(() => wallets.value.length.toString().padStart(2, '0'))
             v-if="wallets.length || store.isAdding"
             class="flex flex-col gap-5 md:grid md:grid-cols-3"
         >
-            <wallet-item v-for="item in wallets" :key="item.address.raw" :item="item" />
+            <wallet-item
+                v-for="item in wallets"
+                :key="item.address.raw"
+                :item="item"
+                data-test="wallet-item"
+            />
             <wallet-item-skeleton v-if="store.isAdding" />
         </div>
         <div v-else class="empty-state">

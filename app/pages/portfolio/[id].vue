@@ -26,7 +26,7 @@ useHead({
 </script>
 
 <template>
-    <main class="flex flex-col gap-5">
+    <main data-testid="portfolio" class="flex flex-col gap-5">
         <ClientOnly>
             <portfolio-content />
             <template #fallback>
