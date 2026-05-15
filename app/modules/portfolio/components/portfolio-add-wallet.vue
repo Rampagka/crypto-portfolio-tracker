@@ -38,8 +38,17 @@ const addWallet = async () => {
     await addWalletToPortfolio(name)
     if (!isError.value) showToast('Wallet added')
 }
+
+const getPlaceholderText = computed(() => {
+    return `Paste ${store.currentChain.toUpperCase()} address...`
+})
 </script>
 
 <template>
-    <address-input v-model="address" :error="isError || undefined" @add="addWallet" />
+    <address-input
+        v-model="address"
+        :error="isError || undefined"
+        :placeholder="getPlaceholderText"
+        @add="addWallet"
+    />
 </template>

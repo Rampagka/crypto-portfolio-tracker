@@ -17,5 +17,14 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
-      - run: npm install
-      - run: npm test
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run unit and component tests
+        run: npm test
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run E2E tests
+        run: npx playwright test

@@ -15,4 +15,12 @@ export default withNuxt(
 
     importsConfig,
     moduleStructure,
+
+    {
+        name: 'e2e/disable-import-restrictions',
+        files: ['tests/e2e/**/*.ts'],
+        rules: {
+            'no-restricted-imports': 'off',
+        },
+    },
 )

@@ -7,9 +7,13 @@ const nameIsEmpty = computed(() => walletName.value.length === 0)
 </script>
 
 <template>
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4" data-test="add-wallet-modal">
         <wallet-name-input v-model="walletName" :default-value="initialName" />
-        <button-ui :disabled="nameIsEmpty" @click="emit('result', walletName)">
+        <button-ui
+            :disabled="nameIsEmpty"
+            data-test="add-wallet-btn"
+            @click="emit('result', walletName)"
+        >
             Add wallet
         </button-ui>
     </div>

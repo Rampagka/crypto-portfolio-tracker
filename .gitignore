@@ -38,3 +38,7 @@ design
 design/*.html
 design/*.jsx
 .nuxtrc
+
+# Tests
+test-results
+playwright-report
